@@ -1,0 +1,72 @@
+{
+    "appName": "EasyRentX",
+    "appSubtitle": "Smart Renting Made Simple",
+    "nav": {
+      "home": "Home",
+      "browse": "Browse Items",
+      "login": "Login",
+      "register": "Register",
+      "listYourItem": "List Your Item"
+    },
+    "footer": {
+      "copy": "© {{year}} EasyRentX. All rights reserved.",
+      "about": "About Us",
+      "contact": "Contact",
+      "terms": "Terms of Service"
+    },
+    "home": {
+      "heroTitle": "Rent Anything, Anytime, Anywhere",
+      "heroSubtitle": "Connect with owners and rent items hassle-free.",
+      "searchPlaceholder": "Search for cars, houses, tools...",
+      "searchButton": "Search",
+      "howItWorks": "How It Works",
+      "step1": "Browse & Find",
+      "step1Desc": "Explore a wide variety of items listed by owners.",
+      "step2": "Book & Secure",
+      "step2Desc": "Request to book your desired item securely.",
+      "step3": "Enjoy Your Rental",
+      "step3Desc": "Pick up the item and enjoy your rental period."
+    },
+    "browse": {
+      "title": "Browse Available Items",
+      "noItems": "No items found matching your criteria.",
+      "rentButton": "View Details"
+    },
+    "itemDetail": {
+      "rentNow": "Rent Now",
+      "owner": "Owner",
+      "description": "Description",
+      "price": "Price",
+      "perDay": "per day",
+      "location": "Location"
+    },
+    "login": {
+      "title": "Login to Your Account",
+      "email": "Email",
+      "password": "Password",
+      "button": "Login",
+      "needAccount": "Need an account?",
+      "registerLink": "Register here"
+    },
+    "register": {
+      "title": "Create an Account",
+      "name": "Full Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "button": "Register",
+      "haveAccount": "Already have an account?",
+      "loginLink": "Login here"
+    },
+    "itemCard": {
+       "pricePerDay": "{{price}} / day"
+    },
+     "theme": {
+       "toggleLight": "Switch to Light Mode",
+       "toggleDark": "Switch to Dark Mode"
+     },
+    "language": {
+       "switchToAmharic": "አማርኛ",
+       "switchToEnglish": "English"
+     }
+  }
