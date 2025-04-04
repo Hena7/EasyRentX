@@ -97,7 +97,7 @@ export const translations = {
     // Amharic Translations
     // ==================================
     am: {
-      appName: "ኢዚሬንትኤክስ",
+      appName: "EasyRentX",
       appSubtitle: "ዘመናዊ ኪራይ በቀላሉ",
       nav: {
           home: "መነሻ",
