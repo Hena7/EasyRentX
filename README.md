@@ -124,5 +124,4 @@ Open a Pull Request.
 
 Please ensure your code follows the project's coding style and includes tests where applicable (tests to be added later).
 
-📄 License
-This project is licensed under the MIT License - see the LICENSE file for details (You should add a LICENSE file, MIT is a common choice).
+

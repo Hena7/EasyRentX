@@ -13,6 +13,7 @@ import ItemDetailPage from './pages/ItemDetailPage';
 import RegisterPage from './pages/RegisterPage'; // <-- Import RegisterPage
 import LoginPage from './pages/LoginPage';     // <-- Import LoginPage
 import NotFoundPage from './pages/NotFoundPage';
+import AboutPage from './pages/AboutPage';
 
 function App() {
   console.log("App component rendering with Layout");
@@ -26,6 +27,7 @@ function App() {
             {/* Public Routes */}
             <Route path="/" element={<HomePage />} />
             <Route path="/browse" element={<BrowseItemsPage />} />
+            <Route path="/about" element={<AboutPage />} /> {/* <-- Add About Route */}
             <Route path="/item/:itemId" element={<ItemDetailPage />} />
             <Route path="/login" element={<LoginPage />} />       {/* <-- Add Login Route */}
             <Route path="/register" element={<RegisterPage />} /> {/* <-- Add Register Route */}

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"; // For Call to Action button
 import useLanguage from "../hooks/useLanguage";
 
 import ItemCard from "../components/features/ItemCard";
+import Testimonials from "../components/features/Testimonials";
 
 function HomePage() {
   const { t } = useLanguage();
@@ -121,6 +122,7 @@ function HomePage() {
             <ItemCard key={item.id} item={item} /> // Use the ItemCard component
           ))}
         </div>
+        <Testimonials/>
       </section>
     </div>
   );

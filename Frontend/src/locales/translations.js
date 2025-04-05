@@ -23,9 +23,13 @@ export const translations = {
          switchToEnglish: "English",
          currentLanguage: "Language"
       },
-      footer: {
-        copy: "© {{year}} EasyRentX. All rights reserved."
-      },
+      // Add to translations.en
+    footer: {
+      copy: "© {{year}} EasyRentX. All rights reserved.",
+      about: "About Us",
+      contact: "Contact", // Example
+      terms: "Terms of Service" // Example
+    },
       home: {
         heroTitle: "Rent Anything, Anytime, Anywhere",
         heroSubtitle: "Connect with owners and rent items hassle-free.",
@@ -40,6 +44,13 @@ export const translations = {
          step3Desc: "Pick up the item and enjoy your rental period.",
          featuredItemsTitle: "Featured Items"
       },
+      about: {
+        title: "About",
+        missionTitle: "Our Mission",
+        missionText: "To simplify the rental process by connecting item owners and renters through a secure, reliable, and user-friendly platform. We aim to make renting anything, from cars to cameras, a hassle-free experience facilitated by our trusted broker system.",
+        howItWorksTitle: "How It Works",
+        howItWorksText: "EasyRentX acts as a peer-to-peer marketplace where Owners list items and Renters can browse and book them. Our platform's Admin (Broker) oversees transactions, ensures security, and helps manage communication, providing peace of mind for both parties.",
+    },
       browse: {
           title: "Browse Available Items",
           noItems: "No items found matching your criteria.",
@@ -59,6 +70,7 @@ export const translations = {
           notFound: "Item not found.",
       },
       login: {
+          demo: "Register/Login",
           title: "Login to Your Account",
           email: "Email",
           password: "Password",
@@ -115,9 +127,14 @@ export const translations = {
          switchToEnglish: "English",
          currentLanguage: "ቋንቋ"
       },
-      footer: {
-        copy: "© {{year}} ኢዚሬንትኤክስ። መብቱ በህግ የተጠበቀ ነው።"
-      },
+     
+    footer: {
+      copy: "© {{year}} ኢዚሬንትኤክስ። መብቱ በህግ የተጠበቀ ነው።",
+      about: "ስለ እኛ",
+      contact: "ያግኙን", // Example
+      terms: "የአገልግሎት ውል" // Example
+    },
+     
       home: {
         heroTitle: "ማንኛውንም ነገር፣ በማንኛውም ጊዜ፣ በማንኛውም ቦታ ይከራዩ",
         heroSubtitle: "ከባለቤቶች ጋር ይገናኙ እና ዕቃዎችን ያለችግር ይከራዩ።",
@@ -132,6 +149,13 @@ export const translations = {
          step3Desc: "ዕቃውን ይውሰዱ እና በኪራይ ጊዜዎ ይደሰቱ።",
          featuredItemsTitle: "ተመራጭ ዕቃዎች"
       },
+      about: {
+        title: "ስለኛ",
+        missionTitle: "ተልዕኳችን",
+        missionText: "የኪራይ ሂደቱን ደህንነቱ በተጠበቀ፣ አስተማማኝ እና ለአጠቃቀም ቀላል በሆነ መድረክ አማካኝነት የዕቃ ባለቤቶችን እና ተከራዮችን በማገናኘት ቀላል ማድረግ ነው። ከመኪና እስከ ካሜራ ማንኛውንም ነገር መከራየት በአስተማማኝ የደላላ ስርዓታችን አማካኝነት ከችግር ነጻ የሆነ ተሞክሮ እንዲሆን ዓላማችን ነው።",
+        howItWorksTitle: "እንዴት እንደሚሰራ",
+        howItWorksText: "ኢዚሬንትኤክስ የዕቃ ባለቤቶች ዕቃዎቻቸውን የሚዘረዝሩበት እና ተከራዮች ማሰስ እና መያዝ የሚችሉበት የአቻ ለአቻ (peer-to-peer) የገበያ ቦታ ሆኖ ያገለግላል። የመድረኩ አስተዳዳሪ (ደላላ) ግብይቶችን ይቆጣጠራል፣ ደህንነትን ያረጋግጣል፣ እና ግንኙነትን ለማስተዳደር ይረዳል፣ ይህም ለሁለቱም ወገኖች የአእምሮ ሰላም ይሰጣል።",
+    },
       browse: {
           title: "ያሉትን ዕቃዎች ያስሱ",
           noItems: "ከፍለጋዎ ጋር የሚዛመድ ምንም ዕቃ አልተገኘም።",
