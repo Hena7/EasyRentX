@@ -153,6 +153,14 @@ const Header = () => {
             {t("about.title")}
           </Link>
 
+         
+
+          {/* Separator (only needed in mobile dropdown for visual clarity) */}
+          <hr className="border-gray-200 dark:border-gray-700 md:hidden my-2" />
+
+          {/* Language & Theme Toggles (Group them for mobile) */}
+          <div className="flex items-center justify-center md:justify-start space-x-4 pt-2 md:pt-0 md:border-l md:border-gray-300 md:dark:border-gray-600 md:pl-4">
+
           <Link to="/register">
             <img
               src="/login.png"
@@ -162,14 +170,10 @@ const Header = () => {
             />
           </Link>
 
-          {/* Separator (only needed in mobile dropdown for visual clarity) */}
-          <hr className="border-gray-200 dark:border-gray-700 md:hidden my-2" />
-
-          {/* Language & Theme Toggles (Group them for mobile) */}
-          <div className="flex items-center justify-center md:justify-start space-x-4 pt-2 md:pt-0 md:border-l md:border-gray-300 md:dark:border-gray-600 md:pl-4">
             {/* Language Switcher (Simpler version) */}
             <div className="flex items-center space-x-1">
               <button
+              
                 onClick={() => changeLanguage("en")}
                 title={t("language.switchToEnglish")}
                 className={`px-2 py-1 rounded text-xs sm:text-sm ${
