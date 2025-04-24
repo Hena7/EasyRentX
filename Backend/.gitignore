@@ -1,0 +1,8 @@
+.env
+.env.example
+.env.test
+.env.production
+node_modules
+package-lock.json
+yarn.lock
+dist
