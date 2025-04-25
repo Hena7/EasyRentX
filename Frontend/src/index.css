@@ -1,0 +1,27 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Basic body styling for theme transition */
+body {
+  @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300;
+}
+
+/* Add any other custom base styles BELOW the directives */
+.star-rating {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+  }
+  
+  .star {
+    font-size: 20px;
+    color: #d1d5db;
+    transition: color 0.3s ease;
+  }
+  
+  .star.filled {
+    color: #f4a81d; /* Yellow star for rating, matching TECC’s theme */
+  }

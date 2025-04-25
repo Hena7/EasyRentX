@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 
 // Use routes
 app.use('/api/items', itemRoutes);
-app.use('/api/users', userRoutes);
+app.use('/api', userRoutes); // Changed to mount user routes at /api to match frontend requests
 
 // Error handling middleware
 app.use((err, req, res, next) => {
