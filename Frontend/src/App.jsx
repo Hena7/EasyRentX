@@ -1,6 +1,9 @@
 // src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { AuthProvider } from './contexts/AuthContext';
 
 // Layout components
 import Header from './components/layout/Header';
@@ -19,8 +22,10 @@ function App() {
   console.log("App component rendering with Layout");
 
   return (
-    <Router>
-      <div className="flex flex-col min-h-screen">
+    <AuthProvider>
+      <Router>
+        <div className="flex flex-col min-h-screen">
+        <ToastContainer position="top-right" autoClose={3000} />
         <Header />
         <main className="flex-grow container mx-auto px-4 py-6 sm:py-8">
           <Routes>
@@ -40,8 +45,9 @@ function App() {
           </Routes>
         </main>
         <Footer />
-      </div>
-    </Router>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 

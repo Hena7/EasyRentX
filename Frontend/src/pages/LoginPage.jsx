@@ -42,7 +42,8 @@ function LoginPage() {
       setError('An unexpected error occurred. Please try again.');
     } finally {
       setLoading(false);
-    };
+    }
+  };
 
   return (
     <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -53,8 +54,6 @@ function LoginPage() {
           </div>
         )}
         <div>
-           {/* Optional: Add an icon/logo here */}
-          {/* <img className="mx-auto h-12 w-auto" src="/path/to/logo.svg" alt="EasyRentX" /> */}
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
             {t('login.title')}
           </h2>
@@ -67,7 +66,6 @@ function LoginPage() {
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
-            {/* Email Address */}
             <div>
               <label htmlFor="email-address" className="sr-only">{t('login.email')}</label>
               <input
@@ -82,14 +80,13 @@ function LoginPage() {
                 placeholder={t('login.email')}
               />
             </div>
-            {/* Password */}
             <div>
               <label htmlFor="password" className="sr-only">{t('login.password')}</label>
               <input
                 id="password"
                 name="password"
                 type="password"
-                autoComplete="current-password" // Correct for login
+                autoComplete="current-password"
                 required
                 value={formData.password}
                 onChange={handleChange}
@@ -100,7 +97,6 @@ function LoginPage() {
           </div>
 
           <div className="flex items-center justify-between">
-            {/* Remember me checkbox - Optional */}
             <div className="flex items-center">
               <input
                 id="remember-me"
@@ -109,36 +105,30 @@ function LoginPage() {
                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-offset-gray-800"
               />
               <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">
-                Remember me {/* Add translation if needed */}
+                Remember me
               </label>
             </div>
 
-             {/* Forgot password link - Optional */}
             <div className="text-sm">
               <a href="#" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
-                Forgot your password? {/* Add translation if needed */}
+                Forgot your password?
               </a>
             </div>
           </div>
 
-           {/* Add space for error messages later */}
-          {/* <div className="h-4 text-sm text-red-600"></div> */}
-
           <div>
             <button
               type="submit"
+              disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-offset-gray-800"
             >
-               {/* Optional: Add a lock icon or spinner */}
-              {t('login.button')}
+              {loading ? 'Logging in...' : t('login.button')}
             </button>
           </div>
         </form>
       </div>
     </div>
   );
-}
-
 }
 
 export default LoginPage;

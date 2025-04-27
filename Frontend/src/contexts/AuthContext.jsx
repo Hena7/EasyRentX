@@ -26,17 +26,17 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const fetchUserProfile = async () => {
-    const response = await api.get('/profile');
-    if (response.data.user) {
-      setUser(response.data.user);
-      return response.data.user;
+    const response = await api.get('/users/profile');
+    if (response.data) {
+      setUser(response.data);
+      return response.data;
     }
     throw new Error('User profile not found');
   };
 
   const login = async (email, password) => {
     try {
-      const response = await api.post('/login', { email, password });
+      const response = await api.post('/auth/login', { email, password });
       const { token, user: userData } = response.data;
       
       localStorage.setItem('token', token);
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const response = await api.post('/register', userData);
+      const response = await api.post('/users/register', userData);
       const { token, user: newUser } = response.data;
       localStorage.setItem('token', token);
       setUser(newUser);

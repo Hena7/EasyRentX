@@ -6,7 +6,7 @@ const auth = require('../middleware/auth');
 
 // Validation middleware
 const registerValidation = [
-  check('username', 'Username is required').not().isEmpty(),
+  check('name', 'Username is required').not().isEmpty(),
   check('email', 'Please include a valid email').isEmail(),
   check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 })
 ];
@@ -24,8 +24,6 @@ const profileUpdateValidation = [
 ];
 
 // Routes
-router.post('/register', registerValidation, userController.register);
-router.post('/login', loginValidation, userController.login);
 router.get('/profile', auth, userController.getProfile);
 router.put('/profile', auth, profileUpdateValidation, userController.updateProfile);
 

@@ -12,8 +12,6 @@ function HomePage() {
 
   // Define placeholder data for featured items
   useEffect( ()=>{
- 
-
     const getData = async () => {
       const featuredItemss = await api.get('http://localhost:5000/api/items');
       setFeaturedItems(featuredItemss.data)
