@@ -10,15 +10,46 @@ const api = axios.create({
   },
 });
 
+// Add request interceptor for authentication
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Add response interceptor for error handling
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response) {
+      // Handle 401 Unauthorized errors
+      if (error.response.status === 401) {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+      }
+      // Handle 403 Forbidden errors
+      if (error.response.status === 403) {
+        toast.error('You do not have permission to perform this action');
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const authService = {
   register: async (userData) => {
     try {
       const response = await api.post('/auth/register', userData);
-      toast.success('Registration successful! Please log in.');
       return response.data;
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'Registration failed';
-      toast.error(errorMessage);
       throw error.response?.data || { message: errorMessage };
     }
   },
@@ -26,12 +57,29 @@ export const authService = {
   login: async (credentials) => {
     try {
       const response = await api.post('/auth/login', credentials);
-      toast.success('Login successful!');
+      const { token } = response.data;
+      if (token) {
+        localStorage.setItem('token', token);
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      }
       return response.data;
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'Login failed';
-      toast.error(errorMessage);
       throw error.response?.data || { message: errorMessage };
+    }
+  },
+
+  logout: () => {
+    localStorage.removeItem('token');
+    delete api.defaults.headers.common['Authorization'];
+  },
+
+  getCurrentUser: async () => {
+    try {
+      const response = await api.get('/users/profile');
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { message: 'Failed to fetch user profile' };
     }
   },
 };

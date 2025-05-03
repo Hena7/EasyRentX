@@ -22,8 +22,8 @@ function App() {
   console.log("App component rendering with Layout");
 
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
+      <AuthProvider>
         <div className="flex flex-col min-h-screen">
         <ToastContainer position="top-right" autoClose={3000} />
         <Header />
@@ -46,8 +46,8 @@ function App() {
         </main>
         <Footer />
         </div>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 

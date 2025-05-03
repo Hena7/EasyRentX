@@ -11,12 +11,25 @@ exports.register = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { username, email, password, firstName, lastName, phoneNumber, address } = req.body;
+    const { username, email, password, firstName, lastName, phoneNumber, address, role = 'user' } = req.body;
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: 'Please provide a valid email address' });
+    }
+
+    // Validate password strength
+    if (password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+    }
 
     // Check if user already exists
     let user = await User.findOne({ $or: [{ email }, { username }] });
     if (user) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({
+        message: user.email === email ? 'Email already registered' : 'Username already taken'
+      });
     }
 
     // Hash password
@@ -31,19 +44,21 @@ exports.register = async (req, res) => {
       firstName,
       lastName,
       phoneNumber,
-      address
+      address,
+      role
     });
 
     await user.save();
 
     // Generate JWT token
     const token = jwt.sign(
-      { userId: user._id },
+      { userId: user._id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: '24h' }
     );
 
     res.status(201).json({
+      success: true,
       token,
       user: {
         id: user._id,
@@ -71,26 +86,29 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
 
     // Check if user exists
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('+password');
     if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: 'Invalid credentials' });
     }
 
     // Validate password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Generate JWT token
+    // Generate JWT token with role
     const token = jwt.sign(
-      { userId: user._id },
+      { userId: user._id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: '24h' }
     );
 
+    // Remove password from user object
+    user.password = undefined;
+
     res.json({
-      success:true,
+      success: true,
       token,
       user: {
         id: user._id,
