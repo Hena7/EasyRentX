@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import useLanguage from '../hooks/useLanguage';
 import { useAuth } from '../contexts/AuthContext';
 
 function LoginPage() {
+  
   const { t } = useLanguage();
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -22,6 +23,7 @@ function LoginPage() {
     });
   };
 
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
@@ -34,7 +36,8 @@ function LoginPage() {
           "token",
           result.token
         )
-        navigate('/');
+        toast.success('Login successful!');
+        navigate("/admin");
       } else {
         setError(result.error);
       }
@@ -44,6 +47,7 @@ function LoginPage() {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">

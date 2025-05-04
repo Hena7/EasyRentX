@@ -7,10 +7,11 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    
     const initializeAuth = async () => {
       const token = localStorage.getItem('token');
       if (token) {
@@ -47,16 +48,12 @@ export const AuthProvider = ({ children }) => {
       const response = await api.post('/auth/login', { email, password });
       const { token, user: userData } = response.data;
       
-      localStorage.setItem('token', token);
       setUser(userData);
       
       // Update axios default headers
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      
-      toast.success('Login successful!');
-      navigate('/');
-      
-      return { success: true, user: userData };
+            
+      return { success: true, user: userData ,token};
     } catch (error) {
       console.error('Login error:', error);
       handleLogout();
