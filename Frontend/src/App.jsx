@@ -18,6 +18,7 @@ import LoginPage from './pages/LoginPage';     // <-- Import LoginPage
 import NotFoundPage from './pages/NotFoundPage';
 import AboutPage from './pages/AboutPage';
 import Authorized from './contexts/Authorized';
+import DashboardPage from './pages/DashboardPage';
 
 function App() {
   console.log("App component rendering with Layout");
@@ -33,6 +34,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/browse" element={<BrowseItemsPage />} />
           <Route path="/about" element={<AboutPage />} /> {/* <-- Add About Route */}
+           <Route path="/dashboard" element={<DashboardPage />} /> {/* <-- Add Dashboard Route */}
           <Route path="/item/:itemId" element={<ItemDetailPage />} />
           <Route path="/login" element={<Authorized><LoginPage /></Authorized>} />       {/* <-- Add Login Route */}
           <Route path="/register" element={<Authorized><RegisterPage /></Authorized>} /> {/* <-- Add Register Route */}
