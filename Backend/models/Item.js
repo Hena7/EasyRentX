@@ -1,55 +1,55 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const itemSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Item name is required'],
-    trim: true
+    required: [true, "Item name is required"],
+    trim: true,
   },
   price: {
     type: Number,
-    required: [true, 'Price is required'],
-    min: [0, 'Price cannot be negative']
+    required: [true, "Price is required"],
+    min: [0, "Price cannot be negative"],
   },
   imageUrl: {
     type: String,
-    required: [true, 'Image URL is required']
+    required: [true, "Image URL is required"],
   },
   location: {
     type: String,
-    required: [true, 'Location is required'],
-    trim: true
+    required: [true, "Location is required"],
+    trim: true,
   },
   description: {
     type: String,
-    trim: true
+    trim: true,
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: "User",
   },
   category: {
     type: String,
-    trim: true
+    trim: true,
   },
   availability: {
     type: Boolean,
-    default: true
+    default: true,
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   updatedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 // Update the updatedAt timestamp before saving
-itemSchema.pre('save', function(next) {
+itemSchema.pre("save", function (next) {
   this.updatedAt = Date.now();
   next();
 });
 
-module.exports = mongoose.model('Item', itemSchema);
+export default mongoose.model("Item", itemSchema);

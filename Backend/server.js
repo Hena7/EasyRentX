@@ -1,79 +1,75 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-require('dotenv').config();
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import dotenv from "dotenv";
+import helmet from "helmet";
+import compression from "compression";
+import morgan from "morgan";
+import connectDB from "./config/database.js";
+import logger from "./utils/logger.js";
+import errorHandler from "./middleware/errorHandler.js";
+import routes from "./routes/index.js";
+
+// Load environment variables
+dotenv.config();
 
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static("public"));
+app.use(helmet());
+app.use(compression());
 
-// MongoDB Connection
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/easyrentx';
-mongoose.connect(MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('MongoDB connection error:', err));
-
-// Import routes
-const itemRoutes = require('./routes/items');
-const userRoutes = require('./routes/users');
-const authRoutes = require('./routes/auth');
+// Logging middleware
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
 
 // Root route
-app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to EasyRentX API' });
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to EasyRentX API" });
 });
 
-// Use routes
-app.use('/api/items', itemRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/auth', authRoutes); // Mount auth routes to match frontend API endpoints
+// API Routes
+app.use("/api", routes);
 
 // Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
-});
+app.use(errorHandler);
 
-// Start server
-const PORT = process.env.PORT || 5000;
-const MAX_PORT_ATTEMPTS = 10;
+// Function to start the server
+const startServer = async () => {
+  try {
+    // MongoDB Connection
+    await connectDB();
 
-const startServer = async (initialPort) => {
-  let currentPort = initialPort;
-  
-  for (let attempt = 0; attempt < MAX_PORT_ATTEMPTS; attempt++) {
-    try {
-      await new Promise((resolve, reject) => {
-        const server = app.listen(currentPort, () => {
-          console.log(`Server is running on port ${currentPort}`);
-          resolve();
-        }).on('error', (err) => {
-          if (err.code === 'EADDRINUSE') {
-            console.log(`Port ${currentPort} is in use, trying port ${currentPort + 1}`);
-            currentPort++;
-            reject(err);
-          } else {
-            reject(err);
-          }
-        });
-      });
-      // If we get here, the server started successfully
-      break;
-    } catch (err) {
-      if (attempt === MAX_PORT_ATTEMPTS - 1) {
-        console.error('Could not find an available port after multiple attempts');
-        process.exit(1);
-      }
-      // Continue to next iteration if it's a port in use error
-      if (err.code !== 'EADDRINUSE') {
-        console.error('Error starting server:', err);
-        process.exit(1);
-      }
-    }
+    const PORT = process.env.PORT || 3000;
+    const server = app.listen(PORT, () => {
+      logger.info(
+        `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+      );
+    });
+
+    // Handle unhandled promise rejections
+    process.on("unhandledRejection", (err) => {
+      logger.error(`Error: ${err.message}`);
+      // Close server & exit process
+      console.log("Unhandled promise rejection:", err);
+      server.close(() => process.exit(1));
+    });
+
+    return server;
+  } catch (error) {
+    logger.error(`Failed to start server: ${error.message}`);
+    process.exit(1);
   }
 };
 
-startServer(PORT);
+// Only start the server if this file is run directly
+if (process.env.NODE_ENV !== "test") {
+  console.log("Starting server...");
+  startServer();
+}
+
+export { app, startServer };

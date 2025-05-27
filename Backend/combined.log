@@ -1,0 +1,43 @@
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:12:04.198Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:13:46.341Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:14:00.389Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:14:17.501Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:14:23.291Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:15:18.900Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:15:32.639Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:15:45.011Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:33:51.471Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:34:06.261Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:35:03.572Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:39:40.131Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:40:04.020Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:40:54.825Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:42:49.178Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:42:57.501Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:43:02.930Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:43:10.508Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:43:23.314Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:43:51.637Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:44:04.179Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:45:10.575Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:45:37.436Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:46:23.857Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:46:54.038Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:47:19.879Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:47:39.214Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:47:39.217Z"}
+{"level":"info","message":"Attempting to connect to MongoDB...","timestamp":"2025-05-27T07:48:44.644Z"}
+{"level":"info","message":"Attempting to connect to MongoDB...","timestamp":"2025-05-27T07:48:44.658Z"}
+{"level":"error","message":"MongoDB Connection Error: bad auth : authentication failed","timestamp":"2025-05-27T07:48:47.715Z"}
+{"level":"error","message":"MongoDB Connection Error: bad auth : authentication failed","timestamp":"2025-05-27T07:48:47.712Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:48:59.698Z"}
+{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:49:24.981Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:49:41.481Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:50:48.842Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:51:50.562Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:52:11.173Z"}
+{"level":"error","message":"Error: MongoDB Connection Error: bad auth : authentication failed","timestamp":"2025-05-27T07:53:07.808Z"}
+{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-27T07:54:12.822Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:54:12.831Z"}
+{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-27T07:56:39.458Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:56:39.467Z"}
