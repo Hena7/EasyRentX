@@ -81,3 +81,59 @@ describe("User API", () => {
     });
   });
 });
+
+describe("Auth API", () => {
+  const registerData = {
+    name: "John Doe",
+    email: "johndoe@example.com",
+    password: "password123",
+    role: "user",
+  };
+
+  describe("POST /api/auth/register", () => {
+    it("should register a new user successfully", async () => {
+      const res = await request(app)
+        .post("/api/auth/register")
+        .send(registerData);
+
+      expect(res.status).toBe(201);
+      expect(res.body.success).toBe(true);
+      expect(res.body.message).toBe("User registered successfully");
+      expect(res.body.token).toBeDefined();
+      expect(res.body.user).toMatchObject({
+        name: registerData.name,
+        email: registerData.email,
+        role: registerData.role,
+      });
+      expect(res.body.user.id).toBeDefined();
+      expect(res.body.user.password).toBeUndefined();
+    });
+
+    it("should not register user with invalid email", async () => {
+      const res = await request(app)
+        .post("/api/auth/register")
+        .send({ ...registerData, email: "invalid-email" });
+
+      expect(res.status).toBe(400);
+      expect(res.body.success).toBe(false);
+    });
+
+    it("should not register user with password less than 6 characters", async () => {
+      const res = await request(app)
+        .post("/api/auth/register")
+        .send({ ...registerData, password: "12345" });
+
+      expect(res.status).toBe(400);
+      expect(res.body.success).toBe(false);
+    });
+
+    it("should not register user with invalid role", async () => {
+      const res = await request(app)
+        .post("/api/auth/register")
+        .send({ ...registerData, role: "invalid-role" });
+
+      expect(res.status).toBe(400);
+      expect(res.body.success).toBe(false);
+    });
+  });
+});

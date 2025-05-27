@@ -6,41 +6,21 @@ import { AppError } from "../utils/AppError.js";
 // Register a new user
 export const register = async (req, res, next) => {
   try {
-    const {
-      username,
-      email,
-      password,
-      firstName,
-      lastName,
-      phoneNumber,
-      address,
-    } = req.body;
+    const { name, email, password, role } = req.body;
 
     // Check if user already exists
-    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
-      throw new AppError(
-        existingUser.email === email
-          ? "Email already registered"
-          : "Username already taken",
-        400
-      );
+      throw new AppError("Email already registered", 400);
     }
 
     // Create new user
     const user = new User({
-      username,
+      name,
       email,
       password,
-      firstName,
-      lastName,
-      phoneNumber,
-      address,
+      role,
     });
-
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
 
     // Save user
     await user.save();
@@ -56,10 +36,9 @@ export const register = async (req, res, next) => {
       token,
       user: {
         id: user._id,
-        username: user.username,
+        name: user.name,
         email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        role: user.role,
       },
     });
   } catch (error) {
@@ -73,7 +52,7 @@ export const login = async (req, res, next) => {
     const { email, password } = req.body;
 
     // Check if user exists
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select("+password");
     if (!user) {
       throw new AppError("Invalid credentials", 401);
     }
