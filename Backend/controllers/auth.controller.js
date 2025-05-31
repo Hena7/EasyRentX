@@ -2,44 +2,15 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 import { AppError } from "../utils/AppError.js";
+import { register, login } from "../services/auth.service.js";
 
 // Register a new user
-export const register = async (req, res, next) => {
+export const registerUser = async (req, res, next) => {
   try {
-    const { name, email, password, role } = req.body;
-
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      throw new AppError("Email already registered", 400);
-    }
-
-    // Create new user
-    const user = new User({
-      name,
-      email,
-      password,
-      role,
-    });
-
-    // Save user
-    await user.save();
-
-    // Generate JWT token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
-
+    const result = await register(req.body);
     res.status(201).json({
-      success: true,
-      message: "User registered successfully",
-      token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
+      status: "success",
+      data: result,
     });
   } catch (error) {
     next(error);
@@ -47,36 +18,13 @@ export const register = async (req, res, next) => {
 };
 
 // Login user
-export const login = async (req, res, next) => {
+export const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
-    // Check if user exists
-    const user = await User.findOne({ email }).select("+password");
-    if (!user) {
-      throw new AppError("Invalid credentials", 401);
-    }
-
-    // Validate password
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      throw new AppError("Invalid credentials", 401);
-    }
-
-    // Generate JWT token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
-
-    res.json({
-      success: true,
-      token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
+    const result = await login(email, password);
+    res.status(200).json({
+      status: "success",
+      data: result,
     });
   } catch (error) {
     next(error);
@@ -84,21 +32,12 @@ export const login = async (req, res, next) => {
 };
 
 // Get user profile
-export const getProfile = async (req, res, next) => {
+export const getMe = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id).select("-password");
-    if (!user) {
-      throw new AppError("User not found", 404);
-    }
-
-    res.json({
-      success: true,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        createdAt: user.createdAt,
+    res.status(200).json({
+      status: "success",
+      data: {
+        user: req.user,
       },
     });
   } catch (error) {

@@ -31,9 +31,9 @@ export const AuthProvider = ({ children }) => {
   const fetchUserProfile = async () => {
     try {
       const response = await api.get('/users/profile');
-      if (response.data) {
-        setUser(response.data);
-        return response.data;
+      if (response.data && response.data.success) {
+        setUser(response.data.user);
+        return response.data.user;
       }
       throw new Error('User profile not found');
     } catch (error) {
@@ -48,12 +48,15 @@ export const AuthProvider = ({ children }) => {
       const response = await api.post('/auth/login', { email, password });
       const { token, user: userData } = response.data;
       
-      setUser(userData);
+      if (token && userData) {
+        localStorage.setItem('token', token);
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        setUser(userData);
+        toast.success('Login successful!');
+        return { success: true, user: userData };
+      }
       
-      // Update axios default headers
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            
-      return { success: true, user: userData ,token};
+      throw new Error('Invalid response from server');
     } catch (error) {
       console.error('Login error:', error);
       handleLogout();
@@ -68,12 +71,18 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       const response = await api.post('/auth/register', userData);
-      if (response.data.success) {
-        toast.success('Registration successful! Please log in.');
-        navigate('/login');
-        return { success: true };
+      const { success, message, token, user } = response.data;
+      
+      if (success && token && user) {
+        localStorage.setItem('token', token);
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        setUser(user);
+        toast.success(message || 'Registration successful!');
+        navigate('/');
+        return { success: true, user };
       }
-      throw new Error('Registration failed');
+      
+      throw new Error(message || 'Registration failed');
     } catch (error) {
       console.error('Registration error:', error);
       toast.error(error.response?.data?.message || 'Registration failed');

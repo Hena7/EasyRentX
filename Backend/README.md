@@ -1,135 +1,246 @@
 # EasyRentX Backend
 
-Backend server for the EasyRentX rental platform built with Express.js and MongoDB.
+A robust backend server for the EasyRentX rental platform, built with Node.js, Express, and MongoDB.
 
-## Setup Instructions
+## Features
 
-1. Install dependencies:
+- 🔐 JWT Authentication
+- 👥 User Management
+- 🏷️ Item/Rental Management
+- 🔍 Search Functionality
+- 📝 Input Validation with Zod
+- 🛡️ Security Best Practices
+- 📊 Error Handling
+- 📝 Logging System
 
-   ```bash
-   npm install
-   ```
+## Tech Stack
 
-2. Create environment file:
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- JWT for Authentication
+- Zod for Validation
+- Winston for Logging
+- Jest for Testing
 
-   - Copy `.env.example` to `.env`
-   - Update the configuration values in `.env`
+## Prerequisites
 
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
+- Node.js (v14 or higher)
+- MongoDB
+- npm or yarn
 
-## API Endpoints
+## Installation
 
-### Authentication
+1. Clone the repository:
 
-- `POST /api/auth/register` - Register new user
+```bash
+git clone https://github.com/yourusername/easyrentx-backend.git
+cd easyrentx-backend
+```
 
-  ```json
-  {
-    "name": "string",
-    "email": "string",
-    "password": "string",
-    "role": "user" | "admin"
-  }
-  ```
+2. Install dependencies:
 
-- `POST /api/auth/login` - Login user
+```bash
+npm install
+```
 
-  ```json
-  {
-    "email": "string",
-    "password": "string"
-  }
-  ```
+3. Create a `.env` file in the root directory with the following variables:
 
-- `GET /api/auth/profile` - Get user profile (requires authentication)
+```env
+NODE_ENV=development
+PORT=5000
+MONGODB_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+JWT_EXPIRES_IN=1d
+```
 
-  - Headers: `Authorization: Bearer <token>`
+4. Start the development server:
 
-- `PUT /api/auth/profile` - Update user profile (requires authentication)
-  - Headers: `Authorization: Bearer <token>`
-  ```json
-  {
-    "name": "string"
-  }
-  ```
-
-### Items
-
-- `GET /api/items` - Get all items
-- `GET /api/items/search` - Search items with filters
-- `GET /api/items/:id` - Get single item by ID
-- `POST /api/items` - Create new item (requires authentication)
-- `PUT /api/items/:id` - Update item (requires authentication)
-- `DELETE /api/items/:id` - Delete item (requires authentication)
-
-## Authentication
-
-The API uses JWT (JSON Web Tokens) for authentication. To access protected endpoints:
-
-1. Register or login to get a JWT token
-2. Include the token in the Authorization header:
-   ```
-   Authorization: Bearer <your_token>
-   ```
-
-## Response Format
-
-All API responses follow this format:
-
-```json
-{
-  "success": true|false,
-  "data": {}, // or
-  "message": "string",
-  "error": "string" // only present when success is false
-}
+```bash
+npm run dev
 ```
 
 ## Project Structure
 
 ```
-├── controllers/     # Route controllers (business logic)
-├── models/         # Database models
-├── routes/         # API routes
+├── config/         # Configuration files
+│   └── env.js     # Environment configuration
+├── controllers/    # Route controllers
 ├── middleware/     # Custom middleware
-│   ├── auth.js     # Authentication middleware
-│   ├── errorHandler.js # Global error handler
-│   └── validateRequest.js # Request validation
+│   ├── auth.middleware.js    # Authentication middleware
+│   ├── error.middleware.js   # Error handling middleware
+│   └── validate.middleware.js # Zod validation middleware
+├── models/         # Mongoose models
+├── routes/         # API routes
+├── services/       # Business logic
 ├── utils/          # Utility functions
 │   ├── AppError.js # Custom error class
 │   └── logger.js   # Logging utility
-├── config/         # Configuration files
 ├── server.js       # Entry point
 └── package.json    # Project metadata and dependencies
 ```
 
-## Development Guidelines
+## API Documentation
 
-1. Follow the existing code structure and naming conventions
-2. Use async/await for handling asynchronous operations
-3. Implement proper error handling using AppError class
-4. Add appropriate validation for request data
-5. Keep the code DRY (Don't Repeat Yourself)
-6. Use the logger utility for debugging and error tracking
+### Authentication
 
-## Environment Variables
+#### Register User
 
-- `PORT` - Server port (default: 5000)
-- `MONGODB_URI` - MongoDB connection string
-- `JWT_SECRET` - Secret key for JWT tokens
-- `CORS_ORIGIN` - Allowed origin for CORS
-- `NODE_ENV` - Environment (development/production)
-- `LOG_LEVEL` - Logging level (debug, info, warn, error)
+```http
+POST /api/auth/register
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123",
+  "role": "user" // optional
+}
+```
+
+#### Login
+
+```http
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "password123"
+}
+```
+
+### Users
+
+#### Create User (Admin Only)
+
+```http
+POST /api/users
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "password": "password123",
+  "role": "user"
+}
+```
+
+#### Update User (Admin Only)
+
+```http
+PUT /api/users/:id
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "name": "Jane Smith",
+  "email": "jane.smith@example.com"
+}
+```
+
+### Items
+
+#### Create Item
+
+```http
+POST /api/items
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "title": "Mountain Bike",
+  "description": "High-quality mountain bike in excellent condition",
+  "price": 50,
+  "category": "Sports",
+  "condition": "like-new",
+  "images": ["https://example.com/image1.jpg"],
+  "location": {
+    "address": "123 Main St",
+    "city": "Boston",
+    "state": "MA",
+    "zipCode": "02108"
+  }
+}
+```
+
+#### Search Items
+
+```http
+GET /api/items/search?q=bike&category=Sports&minPrice=20&maxPrice=100
+```
+
+## Validation
+
+The API uses Zod for request validation. All incoming requests are validated against predefined schemas:
+
+### User Validation
+
+- Name: 2-50 characters
+- Email: Valid email format
+- Password: Minimum 6 characters
+- Role: "user" or "admin"
+
+### Item Validation
+
+- Title: 3-100 characters
+- Description: 10-1000 characters
+- Price: Positive number
+- Condition: Enum of predefined values
+- Location: Structured address object
 
 ## Error Handling
 
-The API uses a centralized error handling system:
+The API implements a centralized error handling system:
 
-1. Custom `AppError` class for application-specific errors
-2. Global error handler middleware
-3. Proper HTTP status codes for different error types
-4. Detailed error messages in development mode
-5. Sanitized error messages in production mode
+- Custom `AppError` class for application-specific errors
+- Global error handler middleware
+- Proper HTTP status codes
+- Detailed error messages in development
+- Sanitized error messages in production
+
+## Logging
+
+Winston logger is used for:
+
+- Request logging
+- Error logging
+- Debug information
+- Performance monitoring
+
+## Testing
+
+Run tests using:
+
+```bash
+npm test
+```
+
+For test coverage:
+
+```bash
+npm run test:coverage
+```
+
+## Security
+
+- JWT Authentication
+- Password Hashing with bcrypt
+- CORS enabled
+- Helmet for security headers
+- Rate limiting
+- Input validation
+- XSS protection
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## License
+
+This project is licensed under the MIT License.

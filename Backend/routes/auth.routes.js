@@ -1,60 +1,35 @@
-import express from "express";
-import { body } from "express-validator";
+import { Router } from "express";
+import { z } from "zod";
 import {
-  register,
-  login,
-  getProfile,
-  updateProfile,
+  registerUser,
+  loginUser,
+  getMe,
 } from "../controllers/auth.controller.js";
-import { validateRequest } from "../middleware/validateRequest.js";
-import { authenticate } from "../middleware/auth.js";
-const router = express.Router();
+import { protect } from "../middleware/auth.middleware.js";
+import { validate } from "../middleware/validate.middleware.js";
 
-// Validation middleware
-const registerValidation = [
-  body("name").trim().notEmpty().withMessage("Name is required"),
-  body("email")
-    .isEmail()
-    .withMessage("Please include a valid email")
-    .normalizeEmail()
-    .toLowerCase(),
-  body("password")
-    .isLength({ min: 6 })
-    .withMessage("Password must be at least 6 characters long"),
-  body("role")
-    .optional()
-    .isIn(["user", "admin"])
-    .withMessage("Role must be either 'user' or 'admin'"),
-  body("firstName").optional().trim(),
-  body("lastName").optional().trim(),
-  body("phoneNumber").optional().trim(),
-  body("address").optional().trim(),
-];
+const router = Router();
 
-const loginValidation = [
-  body("email").isEmail().withMessage("Please include a valid email"),
-  body("password").notEmpty().withMessage("Password is required"),
-];
+// Validation schemas
+const registerSchema = z.object({
+  body: z.object({
+    name: z.string().min(2).max(50),
+    email: z.string().email(),
+    password: z.string().min(6),
+    role: z.enum(["user", "admin"]).optional(),
+  }),
+});
 
-const profileUpdateValidation = [
-  body("firstName").optional().trim(),
-  body("lastName").optional().trim(),
-  body("phoneNumber").optional().trim(),
-  body("address").optional().trim(),
-];
+const loginSchema = z.object({
+  body: z.object({
+    email: z.string().email(),
+    password: z.string(),
+  }),
+});
 
-// Auth routes
-router.post("/register", registerValidation, validateRequest, register);
-router.post("/login", loginValidation, validateRequest, login);
-router.get("/profile", authenticate, getProfile);
-router.put(
-  "/profile",
-  authenticate,
-  profileUpdateValidation,
-  validateRequest,
-  updateProfile
-);
-
-router.get("/me", authenticate, getProfile);
+// Routes
+router.post("/register", validate(registerSchema), registerUser);
+router.post("/login", validate(loginSchema), loginUser);
+router.get("/me", protect, getMe);
 
 export default router;

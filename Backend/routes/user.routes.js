@@ -1,5 +1,5 @@
 import express from "express";
-import { body } from "express-validator";
+import { z } from "zod";
 import {
   createUser,
   getAllUsers,
@@ -7,49 +7,46 @@ import {
   updateUser,
   deleteUser,
 } from "../controllers/user.controller.js";
-import { validateRequest } from "../middleware/validateRequest.js";
+import { validate } from "../middleware/validate.middleware.js";
 import { authenticate, authorize } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Validation middleware
-const createUserValidation = [
-  body("name").trim().notEmpty().withMessage("Name is required"),
-  body("email").isEmail().withMessage("Please include a valid email"),
-  body("password")
-    .isLength({ min: 6 })
-    .withMessage("Password must be at least 6 characters long"),
-];
+// Validation schemas
+const createUserSchema = z.object({
+  body: z.object({
+    name: z.string().min(2).max(50),
+    email: z.string().email(),
+    password: z.string().min(6),
+    role: z.enum(["user", "admin"]).optional(),
+  }),
+});
 
-const updateUserValidation = [
-  body("name").optional().trim().notEmpty().withMessage("Name cannot be empty"),
-  body("email")
-    .optional()
-    .isEmail()
-    .withMessage("Please include a valid email"),
-  body("password")
-    .optional()
-    .isLength({ min: 6 })
-    .withMessage("Password must be at least 6 characters long"),
-];
+const updateUserSchema = z.object({
+  body: z.object({
+    name: z.string().min(2).max(50).optional(),
+    email: z.string().email().optional(),
+    password: z.string().min(6).optional(),
+    role: z.enum(["user", "admin"]).optional(),
+  }),
+});
 
 // Admin routes - protected and admin only
 router.post(
   "/",
   authenticate,
   authorize(["admin"]),
-  createUserValidation,
-  validateRequest,
+  validate(createUserSchema),
   createUser
 );
+
 router.get("/", authenticate, authorize(["admin"]), getAllUsers);
 router.get("/:id", authenticate, authorize(["admin"]), getUserById);
 router.put(
   "/:id",
   authenticate,
   authorize(["admin"]),
-  updateUserValidation,
-  validateRequest,
+  validate(updateUserSchema),
   updateUser
 );
 router.delete("/:id", authenticate, authorize(["admin"]), deleteUser);
