@@ -78,3 +78,9 @@
 {"level":"error","message":"Authentication error: invalid token","timestamp":"2025-05-27T08:13:13.099Z"}
 {"level":"error","message":"Error: User not found\n    at getProfile (file:///C:/Users/Mesa/Desktop/classss/EasyRentX/Backend/controllers/auth.controller.js:92:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-05-27T08:13:31.531Z"}
 {"level":"error","message":"Error: User not found\n    at getProfile (file:///C:/Users/Mesa/Desktop/classss/EasyRentX/Backend/controllers/auth.controller.js:92:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-05-27T08:13:48.619Z"}
+{"level":"info","message":"MongoDB Connected: localhost","timestamp":"2025-05-28T02:45:58.925Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2025-05-28T02:45:58.938Z"}
+{"level":"info","message":"MongoDB Connected: localhost","timestamp":"2025-05-31T06:34:36.196Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2025-05-31T06:34:36.210Z"}
+{"level":"info","message":"MongoDB Connected: localhost","timestamp":"2025-05-31T06:45:04.785Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2025-05-31T06:45:04.794Z"}
