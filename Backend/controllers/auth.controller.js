@@ -73,10 +73,9 @@ export const login = async (req, res, next) => {
       token,
       user: {
         id: user._id,
-        username: user.username,
+        name: user.name,
         email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        role: user.role,
       },
     });
   } catch (error) {
@@ -87,14 +86,20 @@ export const login = async (req, res, next) => {
 // Get user profile
 export const getProfile = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.userId).select("-password");
+    const user = await User.findById(req.user._id).select("-password");
     if (!user) {
       throw new AppError("User not found", 404);
     }
 
     res.json({
       success: true,
-      user,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        createdAt: user.createdAt,
+      },
     });
   } catch (error) {
     next(error);
@@ -104,18 +109,15 @@ export const getProfile = async (req, res, next) => {
 // Update user profile
 export const updateProfile = async (req, res, next) => {
   try {
-    const { firstName, lastName, phoneNumber, address } = req.body;
-    const user = await User.findById(req.user.userId);
+    const { name } = req.body;
+    const user = await User.findById(req.user._id);
 
     if (!user) {
       throw new AppError("User not found", 404);
     }
 
     // Update fields
-    if (firstName) user.firstName = firstName;
-    if (lastName) user.lastName = lastName;
-    if (phoneNumber) user.phoneNumber = phoneNumber;
-    if (address) user.address = address;
+    if (name) user.name = name;
 
     await user.save();
 
@@ -124,12 +126,10 @@ export const updateProfile = async (req, res, next) => {
       message: "Profile updated successfully",
       user: {
         id: user._id,
-        username: user.username,
+        name: user.name,
         email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        phoneNumber: user.phoneNumber,
-        address: user.address,
+        role: user.role,
+        createdAt: user.createdAt,
       },
     });
   } catch (error) {

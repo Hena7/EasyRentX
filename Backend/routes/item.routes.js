@@ -1,5 +1,6 @@
 import express from "express";
 import * as itemController from "../controllers/item.controller.js";
+import { authenticate } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -11,12 +12,12 @@ router.get("/search", itemController.searchItems);
 router.get("/:id", itemController.getItemById);
 
 // Create new item
-router.post("/", itemController.createItem);
+router.post("/", authenticate, itemController.createItem);
 
 // Update item
-router.put("/:id", itemController.updateItem);
+router.put("/:id", authenticate, itemController.updateItem);
 
 // Delete item
-router.delete("/:id", itemController.deleteItem);
+router.delete("/:id", authenticate, itemController.deleteItem);
 
 export default router;

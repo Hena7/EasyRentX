@@ -3,6 +3,11 @@ import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import app from "../server.js";
 import User from "../models/user.model.js";
+import {
+  createTestUser,
+  createTestAdmin,
+  generateTestToken,
+} from "./helpers.js";
 
 let mongoServer;
 
@@ -134,6 +139,162 @@ describe("Auth API", () => {
 
       expect(res.status).toBe(400);
       expect(res.body.success).toBe(false);
+    });
+  });
+});
+
+describe("User Management Endpoints", () => {
+  describe("GET /users", () => {
+    it("should get all users when admin", async () => {
+      const admin = await createTestAdmin();
+      const token = generateTestToken(admin);
+      await createTestUser();
+
+      const res = await request(app)
+        .get("/users")
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(res.status).toBe(200);
+      expect(Array.isArray(res.body)).toBe(true);
+      expect(res.body.length).toBeGreaterThan(0);
+    });
+
+    it("should not get users when not admin", async () => {
+      const user = await createTestUser();
+      const token = generateTestToken(user);
+
+      const res = await request(app)
+        .get("/users")
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(res.status).toBe(403);
+    });
+  });
+
+  describe("GET /users/:id", () => {
+    it("should get user by id when admin", async () => {
+      const admin = await createTestAdmin();
+      const token = generateTestToken(admin);
+      const testUser = await createTestUser();
+
+      const res = await request(app)
+        .get(`/users/${testUser._id}`)
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty("email", testUser.email);
+    });
+
+    it("should not get user when not admin", async () => {
+      const user = await createTestUser();
+      const token = generateTestToken(user);
+      const testUser = await createTestUser();
+
+      const res = await request(app)
+        .get(`/users/${testUser._id}`)
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(res.status).toBe(403);
+    });
+  });
+
+  describe("POST /users", () => {
+    it("should create new user when admin", async () => {
+      const admin = await createTestAdmin();
+      const token = generateTestToken(admin);
+
+      const res = await request(app)
+        .post("/users")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          name: "New User",
+          email: "newuser@example.com",
+          password: "password123",
+          role: "user",
+        });
+
+      expect(res.status).toBe(201);
+      expect(res.body).toHaveProperty("email", "newuser@example.com");
+    });
+
+    it("should not create user when not admin", async () => {
+      const user = await createTestUser();
+      const token = generateTestToken(user);
+
+      const res = await request(app)
+        .post("/users")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          name: "New User",
+          email: "newuser@example.com",
+          password: "password123",
+          role: "user",
+        });
+
+      expect(res.status).toBe(403);
+    });
+  });
+
+  describe("PUT /users/:id", () => {
+    it("should update user when admin", async () => {
+      const admin = await createTestAdmin();
+      const token = generateTestToken(admin);
+      const testUser = await createTestUser();
+
+      const res = await request(app)
+        .put(`/users/${testUser._id}`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          name: "Updated Name",
+          email: "updated@example.com",
+        });
+
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty("name", "Updated Name");
+    });
+
+    it("should not update user when not admin", async () => {
+      const user = await createTestUser();
+      const token = generateTestToken(user);
+      const testUser = await createTestUser();
+
+      const res = await request(app)
+        .put(`/users/${testUser._id}`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          name: "Updated Name",
+        });
+
+      expect(res.status).toBe(403);
+    });
+  });
+
+  describe("DELETE /users/:id", () => {
+    it("should delete user when admin", async () => {
+      const admin = await createTestAdmin();
+      const token = generateTestToken(admin);
+      const testUser = await createTestUser();
+
+      const res = await request(app)
+        .delete(`/users/${testUser._id}`)
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(res.status).toBe(200);
+
+      const deletedUser = await User.findById(testUser._id);
+      expect(deletedUser).toBeNull();
+    });
+
+    it("should not delete user when not admin", async () => {
+      const user = await createTestUser();
+      const token = generateTestToken(user);
+      const testUser = await createTestUser();
+
+      const res = await request(app)
+        .delete(`/users/${testUser._id}`)
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(res.status).toBe(403);
     });
   });
 });

@@ -28,6 +28,7 @@
     "nodemon": "^3.0.1",
     "jest": "^29.7.0",
     "supertest": "^6.3.3",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "mongodb-memory-server": "^9.1.6"
   }
 }

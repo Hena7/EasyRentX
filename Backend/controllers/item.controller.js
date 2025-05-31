@@ -1,144 +1,83 @@
-import Item from "../models/Item.js";
-
+import itemService from "../services/item.service.js";
+import { AppError } from "../utils/AppError.js";
 // Get all items
-export const getAllItems = async (req, res) => {
+export const getAllItems = async (req, res, next) => {
   try {
-    const items = await Item.find()
-      .sort({ createdAt: -1 })
-      .populate("owner", "username email");
-    res.status(200).json(items);
+    const items = await itemService.getAllItems();
+    res.status(200).json({
+      success: true,
+      data: items,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error fetching items", error: error.message });
+    next(error);
   }
 };
 
 // Get single item by ID
-export const getItemById = async (req, res) => {
+export const getItemById = async (req, res, next) => {
   try {
-    const item = await Item.findById(req.params.id).populate(
-      "owner",
-      "username email phoneNumber"
-    );
-
-    if (!item) {
-      return res.status(404).json({ message: "Item not found" });
-    }
-
-    res.status(200).json(item);
+    const item = await itemService.getItemById(req.params.id);
+    res.status(200).json({
+      success: true,
+      data: item,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error fetching item", error: error.message });
+    next(error);
   }
 };
 
 // Create new item
-export const createItem = async (req, res) => {
+export const createItem = async (req, res, next) => {
   try {
-    const newItem = new Item({
-      ...req.body,
-      owner: req.user.id, // Will be set by auth middleware
+    const item = await itemService.createItem(req.body, req.user._id);
+    res.status(201).json({
+      success: true,
+      data: item,
     });
-
-    const savedItem = await newItem.save();
-    res.status(201).json(savedItem);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Error creating item", error: error.message });
+    next(error);
   }
 };
 
 // Update item
-export const updateItem = async (req, res) => {
+export const updateItem = async (req, res, next) => {
   try {
-    const item = await Item.findById(req.params.id);
-
-    if (!item) {
-      return res.status(404).json({ message: "Item not found" });
-    }
-
-    // Check if user is the owner
-    if (item.owner.toString() !== req.user.id) {
-      return res
-        .status(403)
-        .json({ message: "Not authorized to update this item" });
-    }
-
-    const updatedItem = await Item.findByIdAndUpdate(
+    const item = await itemService.updateItem(
       req.params.id,
-      { $set: req.body },
-      { new: true, runValidators: true }
+      req.body,
+      req.user._id
     );
-
-    res.status(200).json(updatedItem);
+    res.status(200).json({
+      success: true,
+      data: item,
+    });
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Error updating item", error: error.message });
+    next(error);
   }
 };
 
 // Delete item
-export const deleteItem = async (req, res) => {
+export const deleteItem = async (req, res, next) => {
   try {
-    const item = await Item.findById(req.params.id);
-
-    if (!item) {
-      return res.status(404).json({ message: "Item not found" });
-    }
-
-    // Check if user is the owner
-    if (item.owner.toString() !== req.user.id) {
-      return res
-        .status(403)
-        .json({ message: "Not authorized to delete this item" });
-    }
-
-    await item.remove();
-    res.status(200).json({ message: "Item deleted successfully" });
+    const result = await itemService.deleteItem(req.params.id, req.user._id);
+    res.status(200).json({
+      success: true,
+      ...result,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error deleting item", error: error.message });
+    next(error);
   }
 };
 
 // Search items
-export const searchItems = async (req, res) => {
+export const searchItems = async (req, res, next) => {
   try {
-    const { query, location, category, minPrice, maxPrice } = req.query;
-
-    const filter = {};
-
-    if (query) {
-      filter.name = { $regex: query, $options: "i" };
-    }
-
-    if (location) {
-      filter.location = { $regex: location, $options: "i" };
-    }
-
-    if (category) {
-      filter.category = category;
-    }
-
-    if (minPrice || maxPrice) {
-      filter.price = {};
-      if (minPrice) filter.price.$gte = Number(minPrice);
-      if (maxPrice) filter.price.$lte = Number(maxPrice);
-    }
-
-    const items = await Item.find(filter)
-      .sort({ createdAt: -1 })
-      .populate("owner", "username email");
-
-    res.status(200).json(items);
+    const items = await itemService.searchItems(req.query);
+    res.status(200).json({
+      success: true,
+      data: items,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error searching items", error: error.message });
+    next(error);
   }
 };
