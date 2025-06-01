@@ -11,17 +11,13 @@ const connectDB = async () => {
 
     logger.info(`MongoDB Connected: ${conn.connection.host}`);
 
-    // Handle connection events
+    // Handle connection errors after initial connection
     mongoose.connection.on("error", (err) => {
       logger.error("MongoDB connection error:", err);
     });
 
     mongoose.connection.on("disconnected", () => {
       logger.warn("MongoDB disconnected");
-    });
-
-    mongoose.connection.on("reconnected", () => {
-      logger.info("MongoDB reconnected");
     });
 
     // Handle process termination
@@ -36,7 +32,7 @@ const connectDB = async () => {
       }
     });
   } catch (error) {
-    logger.error("MongoDB connection error:", error);
+    logger.error("Error connecting to MongoDB:", error);
     process.exit(1);
   }
 };

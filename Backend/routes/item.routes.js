@@ -1,7 +1,7 @@
 import express from "express";
 import { z } from "zod";
 import * as itemController from "../controllers/item.controller.js";
-import { authenticate } from "../middleware/auth.js";
+import { protect } from "../middleware/auth.middleware.js";
 import { validate } from "../middleware/validate.middleware.js";
 
 const router = express.Router();
@@ -25,6 +25,9 @@ const createItemSchema = z.object({
 });
 
 const updateItemSchema = z.object({
+  params: z.object({
+    id: z.string().min(1),
+  }),
   body: z.object({
     title: z.string().min(3).max(100).optional(),
     description: z.string().min(10).max(1000).optional(),
@@ -64,7 +67,7 @@ router.get("/:id", itemController.getItemById);
 // Create new item
 router.post(
   "/",
-  authenticate,
+  protect,
   validate(createItemSchema),
   itemController.createItem
 );
@@ -72,12 +75,12 @@ router.post(
 // Update item
 router.put(
   "/:id",
-  authenticate,
+  protect,
   validate(updateItemSchema),
   itemController.updateItem
 );
 
 // Delete item
-router.delete("/:id", authenticate, itemController.deleteItem);
+router.delete("/:id", protect, itemController.deleteItem);
 
 export default router;

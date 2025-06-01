@@ -1,212 +1,220 @@
 import request from "supertest";
 import app from "../server.js";
-import { createTestUser, generateTestToken } from "./helpers.js";
 import Item from "../models/item.model.js";
+import User from "../models/user.model.js";
 
-describe("Item Management Endpoints", () => {
-  describe("GET /items", () => {
-    it("should get all items", async () => {
-      const user = await createTestUser();
-      const token = generateTestToken(user);
+describe("Item Endpoints", () => {
+  let userToken;
+  let userId;
+  let testItem;
 
-      // Create a test item
-      await Item.create({
-        name: "Test Item",
-        description: "Test Description",
-        price: 100,
-        owner: user._id,
-      });
+  const testUser = {
+    name: "Test User",
+    email: "test@example.com",
+    password: "password123",
+  };
 
-      const res = await request(app)
-        .get("/items")
-        .set("Authorization", `Bearer ${token}`);
+  const itemData = {
+    title: "Test Item",
+    description: "This is a test item",
+    price: 100,
+    category: "Electronics",
+    condition: "new",
+    images: ["https://example.com/image.jpg"],
+    location: {
+      address: "123 Test St",
+      city: "Test City",
+      state: "TS",
+      zipCode: "12345",
+    },
+  };
 
-      expect(res.status).toBe(200);
-      expect(Array.isArray(res.body)).toBe(true);
-      expect(res.body.length).toBeGreaterThan(0);
-    });
+  beforeEach(async () => {
+    await Item.deleteMany({});
+    await User.deleteMany({});
+
+    // Create test user
+    const userRes = await request(app)
+      .post("/api/auth/register")
+      .send(testUser);
+    userToken = userRes.body.data.token;
+    userId = userRes.body.data.user.id;
+
+    // Create test item
+    const itemRes = await request(app)
+      .post("/api/items")
+      .set("Authorization", `Bearer ${userToken}`)
+      .send(itemData);
+    testItem = itemRes.body.data.item;
   });
 
-  describe("GET /items/search", () => {
-    it("should search items by query", async () => {
-      const user = await createTestUser();
-      const token = generateTestToken(user);
-
-      // Create test items
-      await Item.create({
-        name: "Test Item 1",
-        description: "Test Description 1",
-        price: 100,
-        owner: user._id,
-      });
-
-      await Item.create({
-        name: "Another Item",
-        description: "Another Description",
-        price: 200,
-        owner: user._id,
-      });
-
+  describe("POST /api/items", () => {
+    it("should create a new item", async () => {
       const res = await request(app)
-        .get("/items/search?q=Test")
-        .set("Authorization", `Bearer ${token}`);
-
-      expect(res.status).toBe(200);
-      expect(Array.isArray(res.body)).toBe(true);
-      expect(res.body.length).toBe(1);
-      expect(res.body[0].name).toBe("Test Item 1");
-    });
-  });
-
-  describe("GET /items/:id", () => {
-    it("should get item by id", async () => {
-      const user = await createTestUser();
-      const token = generateTestToken(user);
-
-      const item = await Item.create({
-        name: "Test Item",
-        description: "Test Description",
-        price: 100,
-        owner: user._id,
-      });
-
-      const res = await request(app)
-        .get(`/items/${item._id}`)
-        .set("Authorization", `Bearer ${token}`);
-
-      expect(res.status).toBe(200);
-      expect(res.body).toHaveProperty("name", "Test Item");
-    });
-
-    it("should return 404 for non-existent item", async () => {
-      const user = await createTestUser();
-      const token = generateTestToken(user);
-
-      const res = await request(app)
-        .get("/items/507f1f77bcf86cd799439011")
-        .set("Authorization", `Bearer ${token}`);
-
-      expect(res.status).toBe(404);
-    });
-  });
-
-  describe("POST /items", () => {
-    it("should create new item", async () => {
-      const user = await createTestUser();
-      const token = generateTestToken(user);
-
-      const res = await request(app)
-        .post("/items")
-        .set("Authorization", `Bearer ${token}`)
-        .send({
-          name: "New Item",
-          description: "New Description",
-          price: 150,
-        });
+        .post("/api/items")
+        .set("Authorization", `Bearer ${userToken}`)
+        .send(itemData);
 
       expect(res.status).toBe(201);
-      expect(res.body).toHaveProperty("name", "New Item");
-      expect(res.body).toHaveProperty("owner", user._id.toString());
+      expect(res.body.success).toBe(true);
+      expect(res.body.data.item).toHaveProperty("id");
+      expect(res.body.data.item.title).toBe(itemData.title);
+      expect(res.body.data.item.description).toBe(itemData.description);
+      expect(res.body.data.item.price).toBe(itemData.price);
+      expect(res.body.data.item.category).toBe(itemData.category);
+      expect(res.body.data.item.condition).toBe(itemData.condition);
+      expect(res.body.data.item.images).toEqual(itemData.images);
+      expect(res.body.data.item.location).toEqual(itemData.location);
+      expect(res.body.data.item.owner).toBe(userId);
     });
 
     it("should not create item without authentication", async () => {
-      const res = await request(app).post("/items").send({
-        name: "New Item",
-        description: "New Description",
-        price: 150,
-      });
+      const res = await request(app).post("/api/items").send(itemData);
 
       expect(res.status).toBe(401);
+      expect(res.body.success).toBe(false);
     });
   });
 
-  describe("PUT /items/:id", () => {
-    it("should update item when owner", async () => {
-      const user = await createTestUser();
-      const token = generateTestToken(user);
-
-      const item = await Item.create({
-        name: "Test Item",
-        description: "Test Description",
-        price: 100,
-        owner: user._id,
-      });
-
-      const res = await request(app)
-        .put(`/items/${item._id}`)
-        .set("Authorization", `Bearer ${token}`)
-        .send({
-          name: "Updated Item",
-          price: 200,
-        });
+  describe("GET /api/items", () => {
+    it("should get all items", async () => {
+      const res = await request(app).get("/api/items");
 
       expect(res.status).toBe(200);
-      expect(res.body).toHaveProperty("name", "Updated Item");
-      expect(res.body).toHaveProperty("price", 200);
+      expect(res.body.success).toBe(true);
+      expect(Array.isArray(res.body.data.items)).toBe(true);
+      expect(res.body.data.items.length).toBe(1);
+      expect(res.body.data.items[0].title).toBe(itemData.title);
+    });
+  });
+
+  describe("GET /api/items/:id", () => {
+    it("should get item by id", async () => {
+      const res = await request(app).get(`/api/items/${testItem.id}`);
+
+      expect(res.status).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.data.item.id).toBe(testItem.id);
+      expect(res.body.data.item.title).toBe(itemData.title);
+    });
+
+    it("should return 404 for non-existent item", async () => {
+      const fakeId = "507f1f77bcf86cd799439011";
+      const res = await request(app).get(`/api/items/${fakeId}`);
+
+      expect(res.status).toBe(404);
+      expect(res.body.success).toBe(false);
+    });
+  });
+
+  describe("PUT /api/items/:id", () => {
+    it("should update item when owner", async () => {
+      const updateData = {
+        title: "Updated Item",
+        price: 200,
+      };
+
+      const res = await request(app)
+        .put(`/api/items/${testItem.id}`)
+        .set("Authorization", `Bearer ${userToken}`)
+        .send(updateData);
+
+      expect(res.status).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.data.item.title).toBe(updateData.title);
+      expect(res.body.data.item.price).toBe(updateData.price);
     });
 
     it("should not update item when not owner", async () => {
-      const user1 = await createTestUser();
-      const user2 = await createTestUser();
-      const token2 = generateTestToken(user2);
-
-      const item = await Item.create({
-        name: "Test Item",
-        description: "Test Description",
-        price: 100,
-        owner: user1._id,
-      });
+      // Create another user
+      const anotherUserRes = await request(app)
+        .post("/api/auth/register")
+        .send({
+          name: "Another User",
+          email: "another@example.com",
+          password: "password123",
+        });
+      const anotherUserToken = anotherUserRes.body.data.token;
 
       const res = await request(app)
-        .put(`/items/${item._id}`)
-        .set("Authorization", `Bearer ${token2}`)
-        .send({
-          name: "Updated Item",
-        });
+        .put(`/api/items/${testItem.id}`)
+        .set("Authorization", `Bearer ${anotherUserToken}`)
+        .send({ title: "Updated Item" });
 
       expect(res.status).toBe(403);
+      expect(res.body.success).toBe(false);
     });
   });
 
-  describe("DELETE /items/:id", () => {
+  describe("DELETE /api/items/:id", () => {
     it("should delete item when owner", async () => {
-      const user = await createTestUser();
-      const token = generateTestToken(user);
-
-      const item = await Item.create({
-        name: "Test Item",
-        description: "Test Description",
-        price: 100,
-        owner: user._id,
-      });
-
       const res = await request(app)
-        .delete(`/items/${item._id}`)
-        .set("Authorization", `Bearer ${token}`);
+        .delete(`/api/items/${testItem.id}`)
+        .set("Authorization", `Bearer ${userToken}`);
 
       expect(res.status).toBe(200);
+      expect(res.body.success).toBe(true);
 
-      const deletedItem = await Item.findById(item._id);
-      expect(deletedItem).toBeNull();
+      // Verify item is deleted
+      const getRes = await request(app).get(`/api/items/${testItem.id}`);
+      expect(getRes.status).toBe(404);
     });
 
     it("should not delete item when not owner", async () => {
-      const user1 = await createTestUser();
-      const user2 = await createTestUser();
-      const token2 = generateTestToken(user2);
-
-      const item = await Item.create({
-        name: "Test Item",
-        description: "Test Description",
-        price: 100,
-        owner: user1._id,
-      });
+      // Create another user
+      const anotherUserRes = await request(app)
+        .post("/api/auth/register")
+        .send({
+          name: "Another User",
+          email: "another@example.com",
+          password: "password123",
+        });
+      const anotherUserToken = anotherUserRes.body.data.token;
 
       const res = await request(app)
-        .delete(`/items/${item._id}`)
-        .set("Authorization", `Bearer ${token2}`);
+        .delete(`/api/items/${testItem.id}`)
+        .set("Authorization", `Bearer ${anotherUserToken}`);
 
       expect(res.status).toBe(403);
+      expect(res.body.success).toBe(false);
+    });
+  });
+
+  describe("GET /api/items/search", () => {
+    it("should search items by query", async () => {
+      const res = await request(app)
+        .get("/api/items/search")
+        .query({ q: "test" });
+
+      expect(res.status).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(Array.isArray(res.body.data.items)).toBe(true);
+      expect(res.body.data.items.length).toBe(1);
+      expect(res.body.data.items[0].title).toBe(itemData.title);
+    });
+
+    it("should search items by category", async () => {
+      const res = await request(app)
+        .get("/api/items/search")
+        .query({ category: "Electronics" });
+
+      expect(res.status).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(Array.isArray(res.body.data.items)).toBe(true);
+      expect(res.body.data.items.length).toBe(1);
+      expect(res.body.data.items[0].category).toBe("Electronics");
+    });
+
+    it("should search items by price range", async () => {
+      const res = await request(app)
+        .get("/api/items/search")
+        .query({ minPrice: 50, maxPrice: 150 });
+
+      expect(res.status).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(Array.isArray(res.body.data.items)).toBe(true);
+      expect(res.body.data.items.length).toBe(1);
+      expect(res.body.data.items[0].price).toBe(100);
     });
   });
 });

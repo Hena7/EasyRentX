@@ -1,14 +1,10 @@
-import { Router } from "express";
+import express from "express";
 import { z } from "zod";
-import {
-  registerUser,
-  loginUser,
-  getMe,
-} from "../controllers/auth.controller.js";
-import { protect } from "../middleware/auth.middleware.js";
+import { register, login, getMe } from "../controllers/auth.controller.js";
 import { validate } from "../middleware/validate.middleware.js";
+import { protect } from "../middleware/auth.middleware.js";
 
-const router = Router();
+const router = express.Router();
 
 // Validation schemas
 const registerSchema = z.object({
@@ -16,7 +12,6 @@ const registerSchema = z.object({
     name: z.string().min(2).max(50),
     email: z.string().email(),
     password: z.string().min(6),
-    role: z.enum(["user", "admin"]).optional(),
   }),
 });
 
@@ -27,9 +22,9 @@ const loginSchema = z.object({
   }),
 });
 
-// Routes
-router.post("/register", validate(registerSchema), registerUser);
-router.post("/login", validate(loginSchema), loginUser);
+// Auth routes
+router.post("/register", validate(registerSchema), register);
+router.post("/login", validate(loginSchema), login);
 router.get("/me", protect, getMe);
 
 export default router;

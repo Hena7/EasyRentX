@@ -211,17 +211,95 @@ Winston logger is used for:
 
 ## Testing
 
-Run tests using:
+The project uses Jest for testing and MongoDB Memory Server for database testing.
+
+### Test Setup
+
+The test environment uses:
+
+- Jest as the test runner
+- MongoDB Memory Server for in-memory database testing
+- Supertest for HTTP assertions
+
+### Running Tests
+
+Run all tests:
 
 ```bash
 npm test
 ```
 
-For test coverage:
+Run tests in watch mode:
+
+```bash
+npm run test:watch
+```
+
+Generate test coverage report:
 
 ```bash
 npm run test:coverage
 ```
+
+### Test Structure
+
+```
+├── __tests__/           # Test directory
+│   ├── integration/     # Integration tests
+│   │   ├── auth.test.js
+│   │   ├── users.test.js
+│   │   └── items.test.js
+│   └── unit/           # Unit tests
+│       ├── services/
+│       └── utils/
+```
+
+### Writing Tests
+
+Example test file structure:
+
+```javascript
+import mongoose from "mongoose";
+import { MongoMemoryServer } from "mongodb-memory-server";
+import request from "supertest";
+import app from "../server";
+
+let mongoServer;
+
+beforeAll(async () => {
+  mongoServer = await MongoMemoryServer.create();
+  const mongoUri = mongoServer.getUri();
+  await mongoose.connect(mongoUri);
+});
+
+afterAll(async () => {
+  await mongoose.disconnect();
+  await mongoServer.stop();
+});
+
+describe("Auth Endpoints", () => {
+  it("should register a new user", async () => {
+    const res = await request(app).post("/api/auth/register").send({
+      name: "Test User",
+      email: "test@example.com",
+      password: "password123",
+    });
+    expect(res.statusCode).toBe(201);
+    expect(res.body.data).toHaveProperty("token");
+  });
+});
+```
+
+### Test Coverage
+
+The project aims for high test coverage:
+
+- Unit tests for services and utilities
+- Integration tests for API endpoints
+- Database operations using MongoDB Memory Server
+- Authentication and authorization flows
+- Input validation
+- Error handling
 
 ## Security
 

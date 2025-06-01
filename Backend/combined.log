@@ -1,196 +1,40 @@
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:12:04.198Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:13:46.341Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:14:00.389Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:14:17.501Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:14:23.291Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:15:18.900Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:15:32.639Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:15:45.011Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:33:51.471Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:34:06.261Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:35:03.572Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:39:40.131Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:40:04.020Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:40:54.825Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:42:49.178Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:42:57.501Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:43:02.930Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:43:10.508Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:43:23.314Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:43:51.637Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:44:04.179Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:45:10.575Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:45:37.436Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:46:23.857Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:46:54.038Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:47:19.879Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:47:39.214Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:47:39.217Z"}
-{"level":"info","message":"Attempting to connect to MongoDB...","timestamp":"2025-05-27T07:48:44.644Z"}
-{"level":"info","message":"Attempting to connect to MongoDB...","timestamp":"2025-05-27T07:48:44.658Z"}
-{"level":"error","message":"MongoDB Connection Error: bad auth : authentication failed","timestamp":"2025-05-27T07:48:47.715Z"}
-{"level":"error","message":"MongoDB Connection Error: bad auth : authentication failed","timestamp":"2025-05-27T07:48:47.712Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:48:59.698Z"}
-{"level":"error","message":"Error: bad auth : authentication failed","timestamp":"2025-05-27T07:49:24.981Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:49:41.481Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:50:48.842Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:51:50.562Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:52:11.173Z"}
-{"level":"error","message":"Error: MongoDB Connection Error: bad auth : authentication failed","timestamp":"2025-05-27T07:53:07.808Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-27T07:54:12.822Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:54:12.831Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-27T07:56:39.458Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:56:39.467Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-27T07:59:58.226Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T07:59:58.238Z"}
-{"level":"error","message":"ValidationError: User validation failed: name: Please add a name\n    at Document.invalidate (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\mongoose\\lib\\document.js:3012:17\n    at C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\mongoose\\lib\\schematype.js:1368:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)","timestamp":"2025-05-27T08:00:00.979Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-27T08:00:28.570Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T08:00:28.583Z"}
-{"level":"error","message":"ValidationError: User validation failed: name: Please add a name\n    at Document.invalidate (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\mongoose\\lib\\document.js:3012:17\n    at C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\mongoose\\lib\\schematype.js:1368:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)","timestamp":"2025-05-27T08:00:30.608Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-27T08:01:24.436Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T08:01:24.446Z"}
-{"level":"error","message":"ValidationError: User validation failed: name: Please add a name\n    at Document.invalidate (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\mongoose\\lib\\document.js:3012:17\n    at C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\mongoose\\lib\\schematype.js:1368:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)","timestamp":"2025-05-27T08:01:29.067Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-27T08:02:58.326Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T08:02:58.340Z"}
-{"level":"error","message":"ValidationError: User validation failed: name: Please add a name\n    at Document.invalidate (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\mongoose\\lib\\document.js:3012:17\n    at C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\mongoose\\lib\\schematype.js:1368:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)","timestamp":"2025-05-27T08:02:59.770Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-27T08:03:19.953Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T08:03:19.970Z"}
-{"level":"error","message":"ValidationError: User validation failed: name: Please add a name\n    at Document.invalidate (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\mongoose\\lib\\document.js:3219:32)\n    at C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\mongoose\\lib\\document.js:3012:17\n    at C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\mongoose\\lib\\schematype.js:1368:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)","timestamp":"2025-05-27T08:03:23.328Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-27T08:03:56.849Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T08:03:56.860Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-27T08:04:05.620Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T08:04:05.638Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-27T08:05:10.686Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T08:05:10.699Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-27T08:05:27.235Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T08:05:27.249Z"}
-{"level":"error","message":"Error: Illegal arguments: string, undefined\n    at _async (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\bcryptjs\\dist\\bcrypt.js:286:46)\n    at C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\bcryptjs\\dist\\bcrypt.js:307:17\n    at new Promise (<anonymous>)\n    at bcrypt.compare (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\bcryptjs\\dist\\bcrypt.js:306:20)\n    at login (file:///C:/Users/Mesa/Desktop/classss/EasyRentX/Backend/controllers/auth.controller.js:61:34)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-05-27T08:05:56.259Z"}
-{"level":"error","message":"Error: Illegal arguments: string, undefined\n    at _async (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\bcryptjs\\dist\\bcrypt.js:286:46)\n    at C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\bcryptjs\\dist\\bcrypt.js:307:17\n    at new Promise (<anonymous>)\n    at bcrypt.compare (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\bcryptjs\\dist\\bcrypt.js:306:20)\n    at login (file:///C:/Users/Mesa/Desktop/classss/EasyRentX/Backend/controllers/auth.controller.js:61:34)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-05-27T08:07:24.369Z"}
-{"level":"error","message":"Error: Illegal arguments: string, undefined\n    at _async (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\bcryptjs\\dist\\bcrypt.js:286:46)\n    at C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\bcryptjs\\dist\\bcrypt.js:307:17\n    at new Promise (<anonymous>)\n    at bcrypt.compare (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\bcryptjs\\dist\\bcrypt.js:306:20)\n    at login (file:///C:/Users/Mesa/Desktop/classss/EasyRentX/Backend/controllers/auth.controller.js:61:34)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-05-27T08:08:34.142Z"}
-{"level":"error","message":"Error: Illegal arguments: string, undefined\n    at _async (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\bcryptjs\\dist\\bcrypt.js:286:46)\n    at C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\bcryptjs\\dist\\bcrypt.js:307:17\n    at new Promise (<anonymous>)\n    at bcrypt.compare (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\bcryptjs\\dist\\bcrypt.js:306:20)\n    at login (file:///C:/Users/Mesa/Desktop/classss/EasyRentX/Backend/controllers/auth.controller.js:61:34)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-05-27T08:08:52.668Z"}
-{"level":"error","message":"Error: Illegal arguments: string, undefined\n    at _async (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\bcryptjs\\dist\\bcrypt.js:286:46)\n    at C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\bcryptjs\\dist\\bcrypt.js:307:17\n    at new Promise (<anonymous>)\n    at bcrypt.compare (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\bcryptjs\\dist\\bcrypt.js:306:20)\n    at login (file:///C:/Users/Mesa/Desktop/classss/EasyRentX/Backend/controllers/auth.controller.js:61:34)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-05-27T08:09:21.214Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-27T08:09:54.191Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T08:09:54.215Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-27T08:10:04.999Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-27T08:10:05.012Z"}
-{"level":"error","message":"Authentication error: invalid token","timestamp":"2025-05-27T08:11:16.603Z"}
-{"level":"error","message":"Authentication error: invalid token","timestamp":"2025-05-27T08:11:27.965Z"}
-{"level":"error","message":"Authentication error: invalid token","timestamp":"2025-05-27T08:13:13.099Z"}
-{"level":"error","message":"Error: User not found\n    at getProfile (file:///C:/Users/Mesa/Desktop/classss/EasyRentX/Backend/controllers/auth.controller.js:92:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-05-27T08:13:31.531Z"}
-{"level":"error","message":"Error: User not found\n    at getProfile (file:///C:/Users/Mesa/Desktop/classss/EasyRentX/Backend/controllers/auth.controller.js:92:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-05-27T08:13:48.619Z"}
-<<<<<<< HEAD
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T18:57:52.683Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T18:57:52.926Z"}
-{"level":"error","message":"Error: User not found\n    at getProfile (file:///C:/Users/Mesa/Desktop/classss/EasyRentX/Backend/controllers/auth.controller.js:92:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-05-31T18:59:02.403Z"}
-{"level":"error","message":"Error: User not found\n    at getProfile (file:///C:/Users/Mesa/Desktop/classss/EasyRentX/Backend/controllers/auth.controller.js:92:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-05-31T19:00:45.476Z"}
-{"level":"error","message":"Error: User not found\n    at getProfile (file:///C:/Users/Mesa/Desktop/classss/EasyRentX/Backend/controllers/auth.controller.js:92:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-05-31T19:02:04.515Z"}
-{"level":"error","message":"Error: MongoDB Connection Error: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/","timestamp":"2025-05-31T19:03:53.575Z"}
-{"level":"error","message":"Error: MongoDB Connection Error: connection 1 to 159.41.65.49:27017 timed out","timestamp":"2025-05-31T19:04:47.069Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T19:08:10.932Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:08:10.947Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T19:08:20.048Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:08:20.063Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T19:08:29.403Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:08:29.419Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T19:08:37.116Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:08:37.129Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T19:08:49.241Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:08:49.265Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T19:09:05.608Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:09:05.621Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T19:09:19.449Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:09:19.463Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T19:09:24.492Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:09:24.507Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T19:09:32.943Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:09:32.955Z"}
-{"level":"error","message":"Error: User not found\n    at getProfile (file:///C:/Users/Mesa/Desktop/classss/EasyRentX/Backend/controllers/auth.controller.js:93:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-05-31T19:10:07.553Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T19:11:24.174Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:11:24.188Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T19:11:53.431Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:11:53.440Z"}
-{"level":"error","message":"Error: User not found\n    at getProfile (file:///C:/Users/Mesa/Desktop/classss/EasyRentX/Backend/controllers/auth.controller.js:91:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2025-05-31T19:11:54.297Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T19:12:55.882Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:12:55.894Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T19:13:17.914Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:13:17.924Z"}
-{"level":"error","message":"SyntaxError: Expected double-quoted property name in JSON at position 27\n    at JSON.parse (<anonymous>)\n    at parse (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\body-parser\\lib\\types\\json.js:92:19)\n    at C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\body-parser\\lib\\read.js:128:18\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at invokeCallback (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\raw-body\\index.js:238:16)\n    at done (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\raw-body\\index.js:227:7)\n    at IncomingMessage.onEnd (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\node_modules\\raw-body\\index.js:287:7)\n    at IncomingMessage.emit (node:events:519:28)\n    at endReadableNT (node:internal/streams/readable:1696:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)","timestamp":"2025-05-31T19:16:52.745Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T19:19:56.692Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:19:56.703Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T19:20:11.205Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:20:11.219Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T19:21:01.578Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:21:01.590Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T19:21:36.641Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:21:36.652Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T19:22:18.184Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:22:18.195Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T19:22:29.482Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:22:29.492Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T19:25:16.965Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:25:16.979Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T19:26:36.668Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:26:36.681Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T19:26:48.722Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:26:48.732Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T19:28:08.726Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:28:08.746Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T19:28:19.673Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:28:19.688Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T19:28:59.484Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:28:59.494Z"}
-=======
-{"level":"info","message":"MongoDB Connected: localhost","timestamp":"2025-05-28T02:45:58.925Z"}
-{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2025-05-28T02:45:58.938Z"}
-{"level":"info","message":"MongoDB Connected: localhost","timestamp":"2025-05-31T06:34:36.196Z"}
-{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2025-05-31T06:34:36.210Z"}
-{"level":"info","message":"MongoDB Connected: localhost","timestamp":"2025-05-31T06:45:04.785Z"}
-{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2025-05-31T06:45:04.794Z"}
->>>>>>> cdaced4aa42cb9e5ca9015393fc5556fafe1cd2b
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T19:32:08.700Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:32:08.714Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T19:32:19.699Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:32:19.715Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T19:32:36.395Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:32:36.409Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:46:26.660Z"}
-{"level":"error","message":"Uncaught Exception! 💥 Shutting down...","timestamp":"2025-05-31T19:46:26.667Z"}
-{"level":"error","message":"Uncaught Exception! 💥 Shutting down...","timestamp":"2025-05-31T19:51:22.145Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T19:51:56.769Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:51:56.782Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T19:51:56.787Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T19:51:56.834Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T19:52:12.454Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:52:12.469Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T19:52:13.241Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T19:52:13.412Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T19:52:53.610Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:52:53.621Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T19:53:08.872Z"}
-{"level":"warn","message":"Port 3000 is in use, using port 3000 instead","timestamp":"2025-05-31T19:53:08.884Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:53:08.888Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T19:53:09.298Z"}
-{"level":"warn","message":"Port 3000 is in use, using port 3001 instead","timestamp":"2025-05-31T19:53:09.306Z"}
-{"level":"info","message":"Server running in development mode on port 3001","timestamp":"2025-05-31T19:53:09.311Z"}
-{"level":"info","message":"::1 - - [31/May/2025:19:53:11 +0000] \"POST /api/auth/login HTTP/1.1\" 200 320 \"-\" \"PostmanRuntime/7.39.1\"","timestamp":"2025-05-31T19:53:11.095Z"}
-{"level":"info","message":"::1 - - [31/May/2025:19:53:30 +0000] \"GET /api/auth/me HTTP/1.1\" 401 55 \"-\" \"PostmanRuntime/7.39.1\"","timestamp":"2025-05-31T19:53:30.810Z"}
-{"level":"debug","message":"Token decoded successfully for user: 683571f631016318355545e7","timestamp":"2025-05-31T19:53:38.716Z"}
-{"level":"info","message":"::1 - - [31/May/2025:19:53:39 +0000] \"GET /api/auth/me HTTP/1.1\" 200 181 \"-\" \"PostmanRuntime/7.39.1\"","timestamp":"2025-05-31T19:53:39.116Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T19:58:17.375Z"}
-{"level":"warn","message":"Port 3000 is in use, using port 3000 instead","timestamp":"2025-05-31T19:58:17.388Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:58:17.393Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T19:58:17.432Z"}
-{"level":"warn","message":"Port 3000 is in use, using port 3001 instead","timestamp":"2025-05-31T19:58:17.444Z"}
-{"level":"info","message":"Server running in development mode on port 3001","timestamp":"2025-05-31T19:58:17.448Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T19:59:59.066Z"}
-{"level":"warn","message":"Port 3000 is in use, using port 3000 instead","timestamp":"2025-05-31T19:59:59.079Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T19:59:59.082Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T19:59:59.218Z"}
-{"level":"warn","message":"Port 3000 is in use, using port 3001 instead","timestamp":"2025-05-31T19:59:59.230Z"}
-{"level":"info","message":"Server running in development mode on port 3001","timestamp":"2025-05-31T19:59:59.235Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T20:01:03.335Z"}
-{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T20:01:03.341Z"}
-{"level":"warn","message":"Port 3000 is in use, using port 3001 instead","timestamp":"2025-05-31T20:01:03.347Z"}
-{"level":"info","message":"Server running in development mode on port 3001","timestamp":"2025-05-31T20:01:03.351Z"}
-{"level":"warn","message":"Port 3000 is in use, using port 3000 instead","timestamp":"2025-05-31T20:01:03.352Z"}
-{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T20:01:03.356Z"}
+{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T20:38:24.809Z"}
+{"level":"warn","message":"Port 3000 is in use, using port 3000 instead","timestamp":"2025-05-31T20:38:24.826Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T20:38:24.832Z"}
+{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T20:38:32.023Z"}
+{"level":"warn","message":"Port 3000 is in use, using port 3000 instead","timestamp":"2025-05-31T20:38:32.035Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T20:38:32.038Z"}
+{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T20:38:51.348Z"}
+{"level":"warn","message":"Port 3000 is in use, using port 3000 instead","timestamp":"2025-05-31T20:38:51.371Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T20:38:51.376Z"}
+{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T20:39:13.411Z"}
+{"level":"warn","message":"Port 3000 is in use, using port 3000 instead","timestamp":"2025-05-31T20:39:13.421Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T20:39:13.425Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:27 +0000] \"GET /items/507f1f77bcf86cd799439011 HTTP/1.1\" 404 169 \"-\" \"-\"","timestamp":"2025-05-31T20:40:27.859Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:28 +0000] \"POST /items HTTP/1.1\" 404 145 \"-\" \"-\"","timestamp":"2025-05-31T20:40:28.052Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:28 +0000] \"POST /items HTTP/1.1\" 404 145 \"-\" \"-\"","timestamp":"2025-05-31T20:40:28.097Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:31 +0000] \"POST /auth/register HTTP/1.1\" 404 153 \"-\" \"-\"","timestamp":"2025-05-31T20:40:31.834Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:32 +0000] \"POST /auth/register HTTP/1.1\" 404 153 \"-\" \"-\"","timestamp":"2025-05-31T20:40:32.236Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:32 +0000] \"POST /auth/login HTTP/1.1\" 404 150 \"-\" \"-\"","timestamp":"2025-05-31T20:40:32.383Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:32 +0000] \"POST /auth/login HTTP/1.1\" 404 150 \"-\" \"-\"","timestamp":"2025-05-31T20:40:32.523Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:32 +0000] \"GET /auth/profile HTTP/1.1\" 404 151 \"-\" \"-\"","timestamp":"2025-05-31T20:40:32.720Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:32 +0000] \"GET /auth/profile HTTP/1.1\" 404 151 \"-\" \"-\"","timestamp":"2025-05-31T20:40:32.753Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:32 +0000] \"PUT /auth/profile HTTP/1.1\" 404 151 \"-\" \"-\"","timestamp":"2025-05-31T20:40:32.934Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:46 +0000] \"GET /api/items HTTP/1.1\" 200 370 \"-\" \"-\"","timestamp":"2025-05-31T20:45:46.493Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:46 +0000] \"GET /api/items/search?q=Test HTTP/1.1\" 200 731 \"-\" \"-\"","timestamp":"2025-05-31T20:45:46.708Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:46 +0000] \"GET /api/items/683b6a7ae62c2ab1ce94f16e HTTP/1.1\" 200 368 \"-\" \"-\"","timestamp":"2025-05-31T20:45:46.880Z"}
+{"level":"error","message":{"error":"Error fetching item","method":"GET","path":"/api/items/507f1f77bcf86cd799439011","stack":"Error: Error fetching item\n    at Object.getItemById (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\services\\item.service.js:30:11)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at getItemById (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\controllers\\item.controller.js:19:18)"},"timestamp":"2025-05-31T20:45:47.049Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:47 +0000] \"GET /api/items/507f1f77bcf86cd799439011 HTTP/1.1\" 500 50 \"-\" \"-\"","timestamp":"2025-05-31T20:45:47.060Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:47 +0000] \"POST /api/items HTTP/1.1\" 401 61 \"-\" \"-\"","timestamp":"2025-05-31T20:45:47.250Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:47 +0000] \"POST /api/items HTTP/1.1\" 401 55 \"-\" \"-\"","timestamp":"2025-05-31T20:45:47.283Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:47 +0000] \"PUT /api/items/683b6a7be62c2ab1ce94f182 HTTP/1.1\" 401 61 \"-\" \"-\"","timestamp":"2025-05-31T20:45:47.456Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:47 +0000] \"DELETE /api/items/683b6a7be62c2ab1ce94f18f HTTP/1.1\" 401 61 \"-\" \"-\"","timestamp":"2025-05-31T20:45:47.888Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:52 +0000] \"POST /api/auth/register HTTP/1.1\" 201 319 \"-\" \"-\"","timestamp":"2025-05-31T20:45:52.086Z"}
+{"level":"error","message":{"error":"Email already registered","method":"POST","path":"/api/auth/register","stack":"Error: Email already registered\n    at register (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\services\\auth.service.js:11:11)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at registerUser (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\controllers\\auth.controller.js:10:20)"},"timestamp":"2025-05-31T20:45:52.250Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:52 +0000] \"POST /api/auth/register HTTP/1.1\" 400 54 \"-\" \"-\"","timestamp":"2025-05-31T20:45:52.260Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:52 +0000] \"POST /api/auth/login HTTP/1.1\" 200 317 \"-\" \"-\"","timestamp":"2025-05-31T20:45:52.502Z"}
+{"level":"error","message":{"error":"Invalid credentials","method":"POST","path":"/api/auth/login","stack":"Error: Invalid credentials\n    at login (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\services\\auth.service.js:41:11)\n    at loginUser (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\controllers\\auth.controller.js:24:20)"},"timestamp":"2025-05-31T20:45:52.740Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:52 +0000] \"POST /api/auth/login HTTP/1.1\" 401 49 \"-\" \"-\"","timestamp":"2025-05-31T20:45:52.748Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:52 +0000] \"GET /api/auth/profile HTTP/1.1\" 404 155 \"-\" \"-\"","timestamp":"2025-05-31T20:45:52.896Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:52 +0000] \"GET /api/auth/profile HTTP/1.1\" 404 155 \"-\" \"-\"","timestamp":"2025-05-31T20:45:52.929Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:53 +0000] \"PUT /api/auth/profile HTTP/1.1\" 404 155 \"-\" \"-\"","timestamp":"2025-05-31T20:45:53.076Z"}

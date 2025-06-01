@@ -1,12 +1,38 @@
 import userService from "../services/user.service.js";
 import jwt from "jsonwebtoken";
+import User from "../models/user.model.js";
+import { AppError } from "../utils/appError.js";
+import env from "../config/env.js";
 
 export const createUser = async (req, res, next) => {
   try {
-    const user = await userService.createUser(req.body);
+    // Check if user is admin
+    if (req.user.role !== "admin") {
+      return next(new AppError("Not authorized to create users", 403));
+    }
+
+    // Check if user with email already exists
+    const existingUser = await User.findOne({ email: req.body.email });
+    if (existingUser) {
+      return next(new AppError("Email already registered", 400));
+    }
+
+    // Validate role
+    if (req.body.role && !["user", "admin"].includes(req.body.role)) {
+      return next(new AppError("Invalid role", 400));
+    }
+
+    const user = await User.create(req.body);
     res.status(201).json({
       success: true,
-      data: user,
+      data: {
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        },
+      },
     });
   } catch (error) {
     next(error);
@@ -15,10 +41,26 @@ export const createUser = async (req, res, next) => {
 
 export const getUserById = async (req, res, next) => {
   try {
-    const user = await userService.getUserById(req.params.id);
+    // Check if user is admin
+    if (req.user.role !== "admin") {
+      return next(new AppError("Not authorized to access this route", 403));
+    }
+
+    const user = await User.findById(req.params.id).select("-password");
+    if (!user) {
+      return next(new AppError("User not found", 404));
+    }
+
     res.status(200).json({
       success: true,
-      data: user,
+      data: {
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        },
+      },
     });
   } catch (error) {
     next(error);
@@ -27,10 +69,44 @@ export const getUserById = async (req, res, next) => {
 
 export const updateUser = async (req, res, next) => {
   try {
-    const user = await userService.updateUser(req.params.id, req.body);
+    // Check if user is admin
+    if (req.user.role !== "admin") {
+      return next(new AppError("Not authorized to access this route", 403));
+    }
+
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return next(new AppError("User not found", 404));
+    }
+
+    // Check if email is being updated and if it's already taken
+    if (req.body.email && req.body.email !== user.email) {
+      const existingUser = await User.findOne({ email: req.body.email });
+      if (existingUser) {
+        return next(new AppError("Email already registered", 400));
+      }
+    }
+
+    // Validate role if being updated
+    if (req.body.role && !["user", "admin"].includes(req.body.role)) {
+      return next(new AppError("Invalid role", 400));
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    }).select("-password");
+
     res.status(200).json({
       success: true,
-      data: user,
+      data: {
+        user: {
+          id: updatedUser._id,
+          name: updatedUser.name,
+          email: updatedUser.email,
+          role: updatedUser.role,
+        },
+      },
     });
   } catch (error) {
     next(error);
@@ -39,10 +115,21 @@ export const updateUser = async (req, res, next) => {
 
 export const deleteUser = async (req, res, next) => {
   try {
-    await userService.deleteUser(req.params.id);
+    // Check if user is admin
+    if (req.user.role !== "admin") {
+      return next(new AppError("Not authorized to access this route", 403));
+    }
+
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return next(new AppError("User not found", 404));
+    }
+
+    await user.deleteOne();
+
     res.status(200).json({
       success: true,
-      data: {},
+      data: null,
     });
   } catch (error) {
     next(error);
@@ -51,11 +138,22 @@ export const deleteUser = async (req, res, next) => {
 
 export const getAllUsers = async (req, res, next) => {
   try {
-    const users = await userService.getAllUsers();
+    // Check if user is admin
+    if (req.user.role !== "admin") {
+      return next(new AppError("Not authorized to access this route", 403));
+    }
+
+    const users = await User.find().select("-password");
     res.status(200).json({
       success: true,
-      count: users.length,
-      data: users,
+      data: {
+        users: users.map((user) => ({
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        })),
+      },
     });
   } catch (error) {
     next(error);
@@ -91,9 +189,14 @@ export const register = async (req, res, next) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { userId: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "24h" }
+      {
+        id: user._id,
+        role: user.role,
+      },
+      env.JWT_SECRET,
+      {
+        expiresIn: env.JWT_EXPIRES_IN,
+      }
     );
 
     res.status(201).json({
@@ -121,9 +224,14 @@ export const login = async (req, res, next) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { userId: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "24h" }
+      {
+        id: user._id,
+        role: user.role,
+      },
+      env.JWT_SECRET,
+      {
+        expiresIn: env.JWT_EXPIRES_IN,
+      }
     );
 
     res.json({

@@ -4,6 +4,7 @@ import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
 import authRoutes from "./routes/auth.routes.js";
+import itemRoutes from "./routes/item.routes.js";
 import { errorHandler } from "./middleware/error.middleware.js";
 import logger from "./utils/logger.js";
 
@@ -37,6 +38,7 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/items", itemRoutes);
 
 // Health check
 app.get("/health", (req, res) => {

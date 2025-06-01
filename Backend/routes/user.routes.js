@@ -8,7 +8,7 @@ import {
   deleteUser,
 } from "../controllers/user.controller.js";
 import { validate } from "../middleware/validate.middleware.js";
-import { authenticate, authorize } from "../middleware/auth.js";
+import { protect, authorize } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
@@ -34,21 +34,21 @@ const updateUserSchema = z.object({
 // Admin routes - protected and admin only
 router.post(
   "/",
-  authenticate,
+  protect,
   authorize(["admin"]),
   validate(createUserSchema),
   createUser
 );
 
-router.get("/", authenticate, authorize(["admin"]), getAllUsers);
-router.get("/:id", authenticate, authorize(["admin"]), getUserById);
+router.get("/", protect, authorize(["admin"]), getAllUsers);
+router.get("/:id", protect, authorize(["admin"]), getUserById);
 router.put(
   "/:id",
-  authenticate,
+  protect,
   authorize(["admin"]),
   validate(updateUserSchema),
   updateUser
 );
-router.delete("/:id", authenticate, authorize(["admin"]), deleteUser);
+router.delete("/:id", protect, authorize(["admin"]), deleteUser);
 
 export default router;

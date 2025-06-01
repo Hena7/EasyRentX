@@ -1,17 +1,6 @@
 import logger from "../utils/logger.js";
 import env from "../config/env.js";
-
-// Custom error class for operational errors
-export class AppError extends Error {
-  constructor(message, statusCode) {
-    super(message);
-    this.statusCode = statusCode;
-    this.status = `${statusCode}`.startsWith("4") ? "fail" : "error";
-    this.isOperational = true;
-
-    Error.captureStackTrace(this, this.constructor);
-  }
-}
+import { AppError } from "../utils/appError.js";
 
 // Handle MongoDB duplicate key errors
 const handleDuplicateKeyError = (err) => {
@@ -33,47 +22,70 @@ const handleJWTError = () =>
 const handleJWTExpiredError = () =>
   new AppError("Your token has expired. Please log in again.", 401);
 
-// Main error handler middleware
+// Development error response
+const sendErrorDev = (err, res) => {
+  res.status(err.statusCode).json({
+    success: false,
+    message: err.message,
+    stack: err.stack,
+    error: err,
+  });
+};
+
+// Production error response
+const sendErrorProd = (err, res) => {
+  // Operational, trusted error: send message to client
+  if (err.isOperational) {
+    res.status(err.statusCode).json({
+      success: false,
+      message: err.message,
+    });
+  } else {
+    // Programming or other unknown error: don't leak error details
+    console.error("ERROR 💥", err);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
+
+// Handle specific error types
+const handleCastErrorDB = (err) => {
+  const message = `Invalid ${err.path}: ${err.value}`;
+  return new AppError(message, 400);
+};
+
+const handleDuplicateFieldsDB = (err) => {
+  const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
+  const message = `Duplicate field value: ${value}. Please use another value`;
+  return new AppError(message, 400);
+};
+
+const handleValidationErrorDB = (err) => {
+  const errors = Object.values(err.errors).map((el) => el.message);
+  const message = `Invalid input data. ${errors.join(". ")}`;
+  return new AppError(message, 400);
+};
+
+// Main error handling middleware
 export const errorHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
 
-  // Log error
-  logger.error({
-    error: err.message,
-    stack: err.stack,
-    path: req.path,
-    method: req.method,
-  });
+  if (process.env.NODE_ENV === "development") {
+    sendErrorDev(err, res);
+  } else {
+    let error = { ...err };
+    error.message = err.message;
 
-  // Handle specific errors in development
-  if (env.NODE_ENV === "development") {
-    // Handle MongoDB errors
-    if (err.code === 11000) err = handleDuplicateKeyError(err);
-    if (err.name === "ValidationError") err = handleValidationError(err);
-    if (err.name === "JsonWebTokenError") err = handleJWTError();
-    if (err.name === "TokenExpiredError") err = handleJWTExpiredError();
+    if (error.name === "CastError") error = handleCastErrorDB(error);
+    if (error.code === 11000) error = handleDuplicateFieldsDB(error);
+    if (error.name === "ValidationError")
+      error = handleValidationErrorDB(error);
+    if (error.name === "JsonWebTokenError") error = handleJWTError();
+    if (error.name === "TokenExpiredError") error = handleJWTExpiredError();
 
-    return res.status(err.statusCode).json({
-      status: err.status,
-      error: err,
-      message: err.message,
-      stack: err.stack,
-    });
+    sendErrorProd(error, res);
   }
-
-  // Handle specific errors in production
-  if (err.isOperational) {
-    return res.status(err.statusCode).json({
-      status: err.status,
-      message: err.message,
-    });
-  }
-
-  // Handle unknown errors in production
-  logger.error("UNEXPECTED ERROR 💥", err);
-  return res.status(500).json({
-    status: "error",
-    message: "Something went wrong",
-  });
 };

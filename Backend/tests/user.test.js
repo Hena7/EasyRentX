@@ -1,88 +1,226 @@
 import request from "supertest";
-import mongoose from "mongoose";
-import { MongoMemoryServer } from "mongodb-memory-server";
 import app from "../server.js";
 import User from "../models/user.model.js";
 import {
   createTestUser,
   createTestAdmin,
   generateTestToken,
+  createTestAdminWithToken,
 } from "./helpers.js";
 
-let mongoServer;
+describe("User Endpoints", () => {
+  let adminToken;
+  let adminUser;
 
-beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create();
-  const mongoUri = mongoServer.getUri();
-  await mongoose.connect(mongoUri);
-});
-
-afterAll(async () => {
-  await mongoose.disconnect();
-  await mongoServer.stop();
-});
-
-beforeEach(async () => {
-  await User.deleteMany({});
-});
-
-describe("User API", () => {
-  const userData = {
+  const testUser = {
     name: "Test User",
     email: "test@example.com",
     password: "password123",
+    role: "user",
   };
 
+  beforeEach(async () => {
+    await User.deleteMany({});
+
+    // Create admin user
+    const adminRes = await request(app).post("/api/auth/register").send({
+      name: "Admin User",
+      email: "admin@example.com",
+      password: "admin123",
+      role: "admin",
+    });
+
+    adminToken = adminRes.body.data.token;
+    adminUser = adminRes.body.data.user;
+  });
+
   describe("POST /api/users", () => {
-    it("should create a new user", async () => {
-      const res = await request(app).post("/api/users").send(userData);
+    it("should create a new user when admin", async () => {
+      const res = await request(app)
+        .post("/api/users")
+        .set("Authorization", `Bearer ${adminToken}`)
+        .send(testUser);
 
       expect(res.status).toBe(201);
       expect(res.body.success).toBe(true);
-      expect(res.body.data.name).toBe(userData.name);
-      expect(res.body.data.email).toBe(userData.email);
-      expect(res.body.data.password).toBeUndefined();
+      expect(res.body.data.user).toHaveProperty("id");
+      expect(res.body.data.user.name).toBe(testUser.name);
+      expect(res.body.data.user.email).toBe(testUser.email);
     });
 
-    it("should not create user with invalid email", async () => {
+    it("should not create user without admin role", async () => {
+      const userRes = await request(app)
+        .post("/api/auth/register")
+        .send(testUser);
+      const userToken = userRes.body.data.token;
+
       const res = await request(app)
         .post("/api/users")
-        .send({ ...userData, email: "invalid-email" });
+        .set("Authorization", `Bearer ${userToken}`)
+        .send({
+          name: "Another User",
+          email: "another@example.com",
+          password: "password123",
+        });
 
-      expect(res.status).toBe(400);
+      expect(res.status).toBe(403);
       expect(res.body.success).toBe(false);
     });
   });
 
   describe("GET /api/users", () => {
-    it("should get all users", async () => {
-      await User.create(userData);
+    beforeEach(async () => {
+      await request(app)
+        .post("/api/users")
+        .set("Authorization", `Bearer ${adminToken}`)
+        .send(testUser);
+    });
 
-      const res = await request(app).get("/api/users");
+    it("should get all users when admin", async () => {
+      const res = await request(app)
+        .get("/api/users")
+        .set("Authorization", `Bearer ${adminToken}`);
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
-      expect(res.body.data).toHaveLength(1);
-      expect(res.body.data[0].email).toBe(userData.email);
+      expect(Array.isArray(res.body.data.users)).toBe(true);
+      expect(res.body.data.users.length).toBe(2); // Admin + test user
+    });
+
+    it("should not get users without admin role", async () => {
+      const userRes = await request(app)
+        .post("/api/auth/register")
+        .send(testUser);
+      const userToken = userRes.body.data.token;
+
+      const res = await request(app)
+        .get("/api/users")
+        .set("Authorization", `Bearer ${userToken}`);
+
+      expect(res.status).toBe(403);
+      expect(res.body.success).toBe(false);
     });
   });
 
   describe("GET /api/users/:id", () => {
-    it("should get user by id", async () => {
-      const user = await User.create(userData);
+    let testUserId;
 
-      const res = await request(app).get(`/api/users/${user._id}`);
+    beforeEach(async () => {
+      const createRes = await request(app)
+        .post("/api/users")
+        .set("Authorization", `Bearer ${adminToken}`)
+        .send(testUser);
+      testUserId = createRes.body.data.user.id;
+    });
+
+    it("should get user by id when admin", async () => {
+      const res = await request(app)
+        .get(`/api/users/${testUserId}`)
+        .set("Authorization", `Bearer ${adminToken}`);
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
-      expect(res.body.data.email).toBe(userData.email);
+      expect(res.body.data.user.id).toBe(testUserId);
+      expect(res.body.data.user.email).toBe(testUser.email);
     });
 
-    it("should return 404 for non-existent user", async () => {
-      const fakeId = new mongoose.Types.ObjectId();
-      const res = await request(app).get(`/api/users/${fakeId}`);
+    it("should not get user without admin role", async () => {
+      const userRes = await request(app)
+        .post("/api/auth/register")
+        .send(testUser);
+      const userToken = userRes.body.data.token;
 
-      expect(res.status).toBe(404);
+      const res = await request(app)
+        .get(`/api/users/${testUserId}`)
+        .set("Authorization", `Bearer ${userToken}`);
+
+      expect(res.status).toBe(403);
+      expect(res.body.success).toBe(false);
+    });
+  });
+
+  describe("PUT /api/users/:id", () => {
+    let testUserId;
+
+    beforeEach(async () => {
+      const createRes = await request(app)
+        .post("/api/users")
+        .set("Authorization", `Bearer ${adminToken}`)
+        .send(testUser);
+      testUserId = createRes.body.data.user.id;
+    });
+
+    it("should update user when admin", async () => {
+      const updateData = {
+        name: "Updated User",
+        email: "updated@example.com",
+      };
+
+      const res = await request(app)
+        .put(`/api/users/${testUserId}`)
+        .set("Authorization", `Bearer ${adminToken}`)
+        .send(updateData);
+
+      expect(res.status).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.data.user.name).toBe(updateData.name);
+      expect(res.body.data.user.email).toBe(updateData.email);
+    });
+
+    it("should not update user without admin role", async () => {
+      const userRes = await request(app)
+        .post("/api/auth/register")
+        .send(testUser);
+      const userToken = userRes.body.data.token;
+
+      const res = await request(app)
+        .put(`/api/users/${testUserId}`)
+        .set("Authorization", `Bearer ${userToken}`)
+        .send({ name: "Updated User" });
+
+      expect(res.status).toBe(403);
+      expect(res.body.success).toBe(false);
+    });
+  });
+
+  describe("DELETE /api/users/:id", () => {
+    let testUserId;
+
+    beforeEach(async () => {
+      const createRes = await request(app)
+        .post("/api/users")
+        .set("Authorization", `Bearer ${adminToken}`)
+        .send(testUser);
+      testUserId = createRes.body.data.user.id;
+    });
+
+    it("should delete user when admin", async () => {
+      const res = await request(app)
+        .delete(`/api/users/${testUserId}`)
+        .set("Authorization", `Bearer ${adminToken}`);
+
+      expect(res.status).toBe(200);
+      expect(res.body.success).toBe(true);
+
+      // Verify user is deleted
+      const getRes = await request(app)
+        .get(`/api/users/${testUserId}`)
+        .set("Authorization", `Bearer ${adminToken}`);
+      expect(getRes.status).toBe(404);
+    });
+
+    it("should not delete user without admin role", async () => {
+      const userRes = await request(app)
+        .post("/api/auth/register")
+        .send(testUser);
+      const userToken = userRes.body.data.token;
+
+      const res = await request(app)
+        .delete(`/api/users/${testUserId}`)
+        .set("Authorization", `Bearer ${userToken}`);
+
+      expect(res.status).toBe(403);
+      expect(res.body.success).toBe(false);
     });
   });
 });
@@ -144,19 +282,18 @@ describe("Auth API", () => {
 });
 
 describe("User Management Endpoints", () => {
-  describe("GET /users", () => {
+  describe("GET /api/users", () => {
     it("should get all users when admin", async () => {
-      const admin = await createTestAdmin();
-      const token = generateTestToken(admin);
+      const { admin, token } = await createTestAdminWithToken();
       await createTestUser();
 
       const res = await request(app)
-        .get("/users")
+        .get("/api/users")
         .set("Authorization", `Bearer ${token}`);
 
       expect(res.status).toBe(200);
-      expect(Array.isArray(res.body)).toBe(true);
-      expect(res.body.length).toBeGreaterThan(0);
+      expect(Array.isArray(res.body.data.users)).toBe(true);
+      expect(res.body.data.users.length).toBeGreaterThan(0);
     });
 
     it("should not get users when not admin", async () => {
@@ -164,7 +301,7 @@ describe("User Management Endpoints", () => {
       const token = generateTestToken(user);
 
       const res = await request(app)
-        .get("/users")
+        .get("/api/users")
         .set("Authorization", `Bearer ${token}`);
 
       expect(res.status).toBe(403);
@@ -173,16 +310,15 @@ describe("User Management Endpoints", () => {
 
   describe("GET /users/:id", () => {
     it("should get user by id when admin", async () => {
-      const admin = await createTestAdmin();
-      const token = generateTestToken(admin);
+      const { admin, token } = await createTestAdminWithToken();
       const testUser = await createTestUser();
 
       const res = await request(app)
-        .get(`/users/${testUser._id}`)
+        .get(`/api/users/${testUser._id}`)
         .set("Authorization", `Bearer ${token}`);
 
       expect(res.status).toBe(200);
-      expect(res.body).toHaveProperty("email", testUser.email);
+      expect(res.body.data.user).toHaveProperty("email", testUser.email);
     });
 
     it("should not get user when not admin", async () => {
@@ -191,7 +327,7 @@ describe("User Management Endpoints", () => {
       const testUser = await createTestUser();
 
       const res = await request(app)
-        .get(`/users/${testUser._id}`)
+        .get(`/api/users/${testUser._id}`)
         .set("Authorization", `Bearer ${token}`);
 
       expect(res.status).toBe(403);
@@ -200,11 +336,10 @@ describe("User Management Endpoints", () => {
 
   describe("POST /users", () => {
     it("should create new user when admin", async () => {
-      const admin = await createTestAdmin();
-      const token = generateTestToken(admin);
+      const { admin, token } = await createTestAdminWithToken();
 
       const res = await request(app)
-        .post("/users")
+        .post("/api/users")
         .set("Authorization", `Bearer ${token}`)
         .send({
           name: "New User",
@@ -214,7 +349,7 @@ describe("User Management Endpoints", () => {
         });
 
       expect(res.status).toBe(201);
-      expect(res.body).toHaveProperty("email", "newuser@example.com");
+      expect(res.body.data.user).toHaveProperty("email", "newuser@example.com");
     });
 
     it("should not create user when not admin", async () => {
@@ -222,7 +357,7 @@ describe("User Management Endpoints", () => {
       const token = generateTestToken(user);
 
       const res = await request(app)
-        .post("/users")
+        .post("/api/users")
         .set("Authorization", `Bearer ${token}`)
         .send({
           name: "New User",
@@ -237,12 +372,11 @@ describe("User Management Endpoints", () => {
 
   describe("PUT /users/:id", () => {
     it("should update user when admin", async () => {
-      const admin = await createTestAdmin();
-      const token = generateTestToken(admin);
+      const { admin, token } = await createTestAdminWithToken();
       const testUser = await createTestUser();
 
       const res = await request(app)
-        .put(`/users/${testUser._id}`)
+        .put(`/api/users/${testUser._id}`)
         .set("Authorization", `Bearer ${token}`)
         .send({
           name: "Updated Name",
@@ -250,7 +384,7 @@ describe("User Management Endpoints", () => {
         });
 
       expect(res.status).toBe(200);
-      expect(res.body).toHaveProperty("name", "Updated Name");
+      expect(res.body.data.user).toHaveProperty("name", "Updated Name");
     });
 
     it("should not update user when not admin", async () => {
@@ -259,7 +393,7 @@ describe("User Management Endpoints", () => {
       const testUser = await createTestUser();
 
       const res = await request(app)
-        .put(`/users/${testUser._id}`)
+        .put(`/api/users/${testUser._id}`)
         .set("Authorization", `Bearer ${token}`)
         .send({
           name: "Updated Name",
@@ -269,14 +403,13 @@ describe("User Management Endpoints", () => {
     });
   });
 
-  describe("DELETE /users/:id", () => {
+  describe("DELETE /api/users/:id", () => {
     it("should delete user when admin", async () => {
-      const admin = await createTestAdmin();
-      const token = generateTestToken(admin);
+      const { admin, token } = await createTestAdminWithToken();
       const testUser = await createTestUser();
 
       const res = await request(app)
-        .delete(`/users/${testUser._id}`)
+        .delete(`/api/users/${testUser._id}`)
         .set("Authorization", `Bearer ${token}`);
 
       expect(res.status).toBe(200);
@@ -289,9 +422,8 @@ describe("User Management Endpoints", () => {
       const user = await createTestUser();
       const token = generateTestToken(user);
       const testUser = await createTestUser();
-
       const res = await request(app)
-        .delete(`/users/${testUser._id}`)
+        .delete(`/api/users/${testUser._id}`)
         .set("Authorization", `Bearer ${token}`);
 
       expect(res.status).toBe(403);

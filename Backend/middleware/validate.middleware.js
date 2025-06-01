@@ -1,21 +1,22 @@
-import { z } from "zod";
+import { AppError } from "../utils/appError.js";
 
-export const validate = (schema) => async (req, res, next) => {
-  try {
-    await schema.parseAsync({
-      body: req.body,
-      query: req.query,
-      params: req.params,
-    });
-    next();
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return res.status(400).json({
-        status: "error",
-        message: "Validation failed",
-        errors: error.errors,
+export const validate = (schema) => {
+  return (req, res, next) => {
+    try {
+      const validatedData = schema.parse({
+        body: req.body,
+        query: req.query,
+        params: req.params,
       });
+
+      // Replace request data with validated data
+      req.body = validatedData.body;
+      req.query = validatedData.query;
+      req.params = validatedData.params;
+
+      next();
+    } catch (error) {
+      next(new AppError(error.errors[0].message, 400));
     }
-    next(error);
-  }
+  };
 };
