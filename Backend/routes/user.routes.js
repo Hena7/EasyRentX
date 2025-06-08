@@ -22,7 +22,16 @@ const createUserSchema = z.object({
   }),
 });
 
+const userIdSchema = z.object({
+  params: z.object({
+    id: z.string().min(1, "ID is required"),
+  }),
+});
+
 const updateUserSchema = z.object({
+  params: z.object({
+    id: z.string().min(1, "ID is required"),
+  }),
   body: z.object({
     name: z.string().min(2).max(50).optional(),
     email: z.string().email().optional(),
@@ -41,7 +50,13 @@ router.post(
 );
 
 router.get("/", protect, authorize(["admin"]), getAllUsers);
-router.get("/:id", protect, authorize(["admin"]), getUserById);
+router.get(
+  "/:id",
+  protect,
+  authorize(["admin"]),
+  validate(userIdSchema),
+  getUserById
+);
 router.put(
   "/:id",
   protect,
@@ -49,6 +64,12 @@ router.put(
   validate(updateUserSchema),
   updateUser
 );
-router.delete("/:id", protect, authorize(["admin"]), deleteUser);
+router.delete(
+  "/:id",
+  protect,
+  authorize(["admin"]),
+  validate(userIdSchema),
+  deleteUser
+);
 
 export default router;

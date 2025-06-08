@@ -54,7 +54,7 @@ describe("User Endpoints", () => {
       const userRes = await request(app)
         .post("/api/auth/register")
         .send(testUser);
-      const userToken = userRes.body.data.token;
+      const userToken = userRes.body.token;
 
       const res = await request(app)
         .post("/api/users")
@@ -93,7 +93,7 @@ describe("User Endpoints", () => {
       const userRes = await request(app)
         .post("/api/auth/register")
         .send(testUser);
-      const userToken = userRes.body.data.token;
+      const userToken = userRes.body.token;
 
       const res = await request(app)
         .get("/api/users")
@@ -130,7 +130,7 @@ describe("User Endpoints", () => {
       const userRes = await request(app)
         .post("/api/auth/register")
         .send(testUser);
-      const userToken = userRes.body.data.token;
+      const userToken = userRes.body.token;
 
       const res = await request(app)
         .get(`/api/users/${testUserId}`)
@@ -173,7 +173,7 @@ describe("User Endpoints", () => {
       const userRes = await request(app)
         .post("/api/auth/register")
         .send(testUser);
-      const userToken = userRes.body.data.token;
+      const userToken = userRes.body.token;
 
       const res = await request(app)
         .put(`/api/users/${testUserId}`)
@@ -215,7 +215,7 @@ describe("User Endpoints", () => {
       const userRes = await request(app)
         .post("/api/auth/register")
         .send(testUser);
-      const userToken = userRes.body.data.token;
+      const userToken = userRes.body.token;
 
       const res = await request(app)
         .delete(`/api/users/${testUserId}`)

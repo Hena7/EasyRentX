@@ -87,8 +87,14 @@ export const updateUser = async (req, res, next) => {
       }
     }
 
+    console.log(req.body);
+
     // Validate role if being updated
-    if (req.body.role && !["user", "admin"].includes(req.body.role)) {
+    if (
+      req.user.role !== "admin" &&
+      req.user.role !== req.body.role &&
+      !["user", "admin"].includes(req.body.role)
+    ) {
       return next(new AppError("Invalid role", 400));
     }
 
