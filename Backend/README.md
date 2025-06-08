@@ -277,6 +277,27 @@ Generate test coverage report:
 npm run test:coverage
 ```
 
+### Running Specific Tests
+
+You can run specific test files or test suites using Jest's pattern matching:
+
+```bash
+# Run tests in a specific file
+npm test -- auth.test.js
+
+# Run tests matching a pattern
+npm test -- -t "should register a new user"
+
+# Run tests in a specific directory
+npm test -- integration/
+
+# Run tests with a specific name pattern
+npm test -- -t "auth"
+
+# Run tests with coverage for a specific file
+npm test -- auth.test.js --coverage
+```
+
 ### Test Structure
 
 ```
