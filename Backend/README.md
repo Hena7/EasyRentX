@@ -23,6 +23,42 @@ A robust backend server for the EasyRentX rental platform, built with Node.js, E
 - Winston for Logging
 - Jest for Testing
 
+## Standards Compliance
+
+This project adheres to the following ISO standards:
+
+### ISO/IEC 27001:2013 - Information Security Management
+
+- Secure authentication and authorization
+- Data encryption in transit and at rest
+- Regular security audits and monitoring
+- Access control and user management
+
+### ISO/IEC 25010:2011 - Software Product Quality
+
+- Performance efficiency
+- Compatibility
+- Usability
+- Reliability
+- Security
+- Maintainability
+- Portability
+
+### ISO 8601 - Date and Time Formats
+
+- Consistent date/time handling across the application
+- Standardized timestamp formats
+- UTC timezone usage for data storage
+
+### ISO/IEC 9126 - Software Quality Characteristics
+
+- Functionality
+- Reliability
+- Usability
+- Efficiency
+- Maintainability
+- Portability
+
 ## Prerequisites
 
 - Node.js (v14 or higher)
