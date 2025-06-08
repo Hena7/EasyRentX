@@ -23,12 +23,15 @@ describe("User Endpoints", () => {
     await User.deleteMany({});
 
     // Create admin user
-    const adminRes = await request(app).post("/api/auth/register").send({
-      name: "Admin User",
-      email: "admin@example.com",
-      password: "admin123",
-      role: "admin",
-    });
+    const adminRes = await request(app)
+      .post("/api/auth/register")
+      .send({
+        name: "Admin User",
+        email: `admin${Math.random()}@example.com`,
+        password: "admin123",
+        role: "admin",
+        username: `admin${Math.random()}`,
+      });
 
     adminToken = adminRes.body.data.token;
     adminUser = adminRes.body.data.user;
