@@ -70,8 +70,8 @@ This project adheres to the following ISO standards:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/easyrentx-backend.git
-cd easyrentx-backend
+git clone https://github.com/Hena7/EasyRentX.git
+cd EasyRentX/Backend
 ```
 
 2. Install dependencies:
@@ -248,6 +248,60 @@ Winston logger is used for:
 ## Testing
 
 The project uses Jest for testing and MongoDB Memory Server for database testing.
+
+### MongoDB Memory Server Setup
+
+To use MongoDB Memory Server for testing:
+
+1. Install the required dependencies:
+
+```bash
+npm install --save-dev mongodb-memory-server
+```
+
+2. Create a test database setup file (e.g., `test/setup.js`):
+
+```javascript
+const { MongoMemoryServer } = require("mongodb-memory-server");
+const mongoose = require("mongoose");
+
+let mongod;
+
+// Connect to the in-memory database
+module.exports.connect = async () => {
+  mongod = await MongoMemoryServer.create();
+  const uri = mongod.getUri();
+  await mongoose.connect(uri);
+};
+
+// Drop database, close the connection and stop mongod
+module.exports.closeDatabase = async () => {
+  await mongoose.connection.dropDatabase();
+  await mongoose.connection.close();
+  await mongod.stop();
+};
+
+// Clear all data in the database
+module.exports.clearDatabase = async () => {
+  const collections = mongoose.connection.collections;
+  for (const key in collections) {
+    const collection = collections[key];
+    await collection.deleteMany();
+  }
+};
+```
+
+3. Use in your test files:
+
+```javascript
+const dbHandler = require("./setup");
+
+beforeAll(async () => await dbHandler.connect());
+afterEach(async () => await dbHandler.clearDatabase());
+afterAll(async () => await dbHandler.closeDatabase());
+```
+
+This setup provides an isolated MongoDB instance for each test suite, ensuring your tests don't interfere with each other or your development database.
 
 ### Test Setup
 
