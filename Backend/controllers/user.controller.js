@@ -162,26 +162,13 @@ export const getAllUsers = async (req, res, next) => {
 
 export const register = async (req, res, next) => {
   try {
-    const {
-      username,
-      email,
-      password,
-      firstName,
-      lastName,
-      phoneNumber,
-      address,
-      role = "user",
-    } = req.body;
+    const { email, password, name, role = "user" } = req.body;
 
     // Create user with additional fields
     const userData = {
-      username,
       email,
       password,
-      firstName,
-      lastName,
-      phoneNumber,
-      address,
+      name,
       role,
     };
 
@@ -204,10 +191,8 @@ export const register = async (req, res, next) => {
       token,
       user: {
         id: user._id,
-        username: user.username,
+        name: user.name,
         email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
         role: user.role,
       },
     });
@@ -239,10 +224,8 @@ export const login = async (req, res, next) => {
       token,
       user: {
         id: user._id,
-        username: user.username,
+        name: user.name,
         email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
         role: user.role,
       },
     });
@@ -262,24 +245,17 @@ export const getProfile = async (req, res, next) => {
 
 export const updateProfile = async (req, res, next) => {
   try {
-    const { firstName, lastName, phoneNumber, address } = req.body;
+    const { name } = req.body;
     const updateData = {
-      firstName,
-      lastName,
-      phoneNumber,
-      address,
+      name,
     };
 
     const user = await userService.updateUser(req.user.userId, updateData);
     res.json({
       user: {
         id: user._id,
-        username: user.username,
+        name: user.name,
         email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        phoneNumber: user.phoneNumber,
-        address: user.address,
         role: user.role,
       },
     });

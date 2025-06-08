@@ -30,7 +30,6 @@ describe("User Endpoints", () => {
         email: `admin${Math.random()}@example.com`,
         password: "admin123",
         role: "admin",
-        username: `admin${Math.random()}`,
       });
 
     adminToken = adminRes.body.data.token;
