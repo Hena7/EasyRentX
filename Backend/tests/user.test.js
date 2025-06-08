@@ -51,10 +51,19 @@ describe("User Endpoints", () => {
     });
 
     it("should not create user without admin role", async () => {
+      // Create a regular user
+      const regularUser = {
+        name: "Regular User",
+        email: `regular${Math.random()}@example.com`,
+        password: "password123",
+        role: "user",
+      };
+
       const userRes = await request(app)
         .post("/api/auth/register")
-        .send(testUser);
-      const userToken = userRes.body.token;
+        .send(regularUser);
+
+      const userToken = userRes.body.data.token;
 
       const res = await request(app)
         .post("/api/users")
@@ -90,10 +99,19 @@ describe("User Endpoints", () => {
     });
 
     it("should not get users without admin role", async () => {
+      // Create a regular user
+      const regularUser = {
+        name: "Regular User",
+        email: `regular${Math.random()}@example.com`,
+        password: "password123",
+        role: "user",
+      };
+
       const userRes = await request(app)
         .post("/api/auth/register")
-        .send(testUser);
-      const userToken = userRes.body.token;
+        .send(regularUser);
+
+      const userToken = userRes.body.data.token;
 
       const res = await request(app)
         .get("/api/users")
@@ -127,10 +145,19 @@ describe("User Endpoints", () => {
     });
 
     it("should not get user without admin role", async () => {
+      // Create a regular user
+      const regularUser = {
+        name: "Regular User",
+        email: `regular${Math.random()}@example.com`,
+        password: "password123",
+        role: "user",
+      };
+
       const userRes = await request(app)
         .post("/api/auth/register")
-        .send(testUser);
-      const userToken = userRes.body.token;
+        .send(regularUser);
+
+      const userToken = userRes.body.data.token;
 
       const res = await request(app)
         .get(`/api/users/${testUserId}`)
@@ -170,10 +197,19 @@ describe("User Endpoints", () => {
     });
 
     it("should not update user without admin role", async () => {
+      // Create a regular user
+      const regularUser = {
+        name: "Regular User",
+        email: `regular${Math.random()}@example.com`,
+        password: "password123",
+        role: "user",
+      };
+
       const userRes = await request(app)
         .post("/api/auth/register")
-        .send(testUser);
-      const userToken = userRes.body.token;
+        .send(regularUser);
+
+      const userToken = userRes.body.data.token;
 
       const res = await request(app)
         .put(`/api/users/${testUserId}`)
