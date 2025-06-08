@@ -211,14 +211,52 @@ describe("User Endpoints", () => {
       expect(getRes.status).toBe(404);
     });
 
-    it("should not delete user without admin role", async () => {
+    it("should not delete user when not admin", async () => {
+      // Create an admin user first
+      const adminUser = {
+        name: "Admin User",
+        email: `admin${Math.random()}@example.com`,
+        password: "admin123",
+        role: "admin",
+      };
+
+      const adminRes = await request(app)
+        .post("/api/auth/register")
+        .send(adminUser);
+
+      const adminToken = adminRes.body.data.token;
+
+      // Create a regular user
+      const regularUser = {
+        name: "Regular User",
+        email: `regular${Math.random()}@example.com`,
+        password: "password123",
+        role: "user",
+      };
+
       const userRes = await request(app)
         .post("/api/auth/register")
-        .send(testUser);
-      const userToken = userRes.body.token;
+        .send(regularUser);
+
+      const userToken = userRes.body.data.token;
+
+      // Create a test user to delete
+      const testUserToDelete = {
+        name: "Test User To Delete",
+        email: `test${Math.random()}@example.com`,
+        password: "password123",
+        role: "user",
+      };
+
+      const createRes = await request(app)
+        .post("/api/users")
+        .set("Authorization", `Bearer ${adminToken}`)
+        .send(testUserToDelete);
+
+      const userToDeleteId = createRes.body.data.user.id;
 
       const res = await request(app)
-        .delete(`/api/users/${testUserId}`)
+        .delete(`/api/users/${userToDeleteId}`)
         .set("Authorization", `Bearer ${userToken}`);
 
       expect(res.status).toBe(403);
@@ -243,15 +281,15 @@ describe("Auth API", () => {
 
       expect(res.status).toBe(201);
       expect(res.body.success).toBe(true);
-      expect(res.body.message).toBe("User registered successfully");
-      expect(res.body.token).toBeDefined();
-      expect(res.body.user).toMatchObject({
+      expect(res.body.data).toBeDefined();
+      expect(res.body.data.token).toBeDefined();
+      expect(res.body.data.user).toMatchObject({
         name: registerData.name,
         email: registerData.email,
         role: registerData.role,
       });
-      expect(res.body.user.id).toBeDefined();
-      expect(res.body.user.password).toBeUndefined();
+      expect(res.body.data.user.id).toBeDefined();
+      expect(res.body.data.user.password).toBeUndefined();
     });
 
     it("should not register user with invalid email", async () => {
@@ -421,14 +459,55 @@ describe("User Management Endpoints", () => {
     });
 
     it("should not delete user when not admin", async () => {
-      const user = await createTestUser();
-      const token = generateTestToken(user);
-      const testUser = await createTestUser();
+      // Create an admin user first
+      const adminUser = {
+        name: "Admin User",
+        email: `admin${Math.random()}@example.com`,
+        password: "admin123",
+        role: "admin",
+      };
+
+      const adminRes = await request(app)
+        .post("/api/auth/register")
+        .send(adminUser);
+
+      const adminToken = adminRes.body.data.token;
+
+      // Create a regular user
+      const regularUser = {
+        name: "Regular User",
+        email: `regular${Math.random()}@example.com`,
+        password: "password123",
+        role: "user",
+      };
+
+      const userRes = await request(app)
+        .post("/api/auth/register")
+        .send(regularUser);
+
+      const userToken = userRes.body.data.token;
+
+      // Create a test user to delete
+      const testUserToDelete = {
+        name: "Test User To Delete",
+        email: `test${Math.random()}@example.com`,
+        password: "password123",
+        role: "user",
+      };
+
+      const createRes = await request(app)
+        .post("/api/users")
+        .set("Authorization", `Bearer ${adminToken}`)
+        .send(testUserToDelete);
+
+      const userToDeleteId = createRes.body.data.user.id;
+
       const res = await request(app)
-        .delete(`/api/users/${testUser._id}`)
-        .set("Authorization", `Bearer ${token}`);
+        .delete(`/api/users/${userToDeleteId}`)
+        .set("Authorization", `Bearer ${userToken}`);
 
       expect(res.status).toBe(403);
+      expect(res.body.success).toBe(false);
     });
   });
 });
