@@ -12,7 +12,7 @@ const ItemCard = ({ item }) => {
   }
 
   // Placeholder image if item.imageUrl is missing
-  const imageUrl = item.imageUrl || `https://via.placeholder.com/400x300.png?text=${t('Image+Not+Available')}`; // Simple placeholder
+  const imageUrl = item.imageUrl || `https://fakeimg.pl/600x400`; // Simple placeholder
 
   // Format price - basic version, doesn't handle currency symbols yet
   // We need to extract the number for potential formatting/replacement

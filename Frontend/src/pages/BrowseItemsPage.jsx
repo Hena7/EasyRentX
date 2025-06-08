@@ -1,27 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import useLanguage from '../hooks/useLanguage'; // For translation
 import ItemCard from '../components/features/ItemCard'; // The card component we created
+import api from '../api/axios'; // Import the configured axios instance
 
-// Placeholder data - replace with API call later
-const allItemsData = [
-   { id: 1, name: 'Modern Sedan Car', price: 50, imageUrl: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNhcnN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60', location: 'Addis Ababa' },
-   { id: 2, name: 'Cozy Downtown Apartment', price: 120, imageUrl: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGhvdXNlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60', location: 'Bole' },
-   { id: 3, name: 'Professional DSLR Camera', price: 40, imageUrl: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FtZXJhfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60', location: 'Piassa' },
-   { id: 4, name: 'Mountain Bike - Advanced', price: 25, imageUrl: 'https://images.unsplash.com/photo-1511994298241-608e28f14fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmljeWNsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60', location: 'CMC' },
-   { id: 5, name: 'Camping Tent for 4 Persons', price: 30, imageUrl: 'https://images.unsplash.com/photo-1478827554211-a86990ade468?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGVudHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60', location: 'Lebu' },
-   { id: 6, name: 'Electric Drill Set with Bits', price: 15, imageUrl: 'https://images.unsplash.com/photo-1621905251911-a7e10b09b9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZHJpbGx8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60', location: 'Kazanchis' },
-   { id: 7, name: 'Spacious Family House', price: 250, imageUrl: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aG91c2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60', location: 'Old Airport' },
-   { id: 8, name: 'Portable Bluetooth Speaker', price: 10, imageUrl: 'https://images.unsplash.com/photo-1589256469067-ea9c14617511?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c3BlYWtlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60', location: 'Ayat' },
-];
-
-// Simulate fetching data (replace with actual API call later)
+// Fetch items from the API
 const fetchItems = async () => {
-  console.log("Simulating fetch items...");
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 500)); // 0.5 second delay
-  console.log("Simulated fetch complete.");
-  // In a real app, handle potential errors here
-  return allItemsData;
+  try {
+    console.log('Fetching items from:', `${api.defaults.baseURL}/items`);
+    const response = await api.get('/items');
+    console.log('API Response:', response);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching items:', error);
+    console.error('Error details:', {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data
+    });
+    throw error;
+  }
 };
 
 

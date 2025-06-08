@@ -1,0 +1,30 @@
+* text=auto eol=lf
+*.{cmd,[cC][mM][dD]} text eol=crlf
+*.{bat,[bB][aA][tT]} text eol=crlf
+
+# Source code
+*.js text
+*.jsx text
+*.json text
+*.html text
+*.css text
+*.svg text
+
+# Documentation
+*.md text
+*.txt text
+
+# Config files
+.gitattributes text
+.gitignore text
+*.yml text
+*.yaml text
+*.config.js text
+
+# Binary files
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
+*.zip binary
+*.pdf binary
