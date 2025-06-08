@@ -1,60 +1,136 @@
-import React from 'react';
-import DashboardLayout, { DashboardCard } from '../components/layout/DashboardLayout';
-import useLanguage from '../hooks/useLanguage';
-import useAuth from '../hooks/useAuth'; // Using mock auth for now
 
-function AdminDashboardPage() {
-  const { t } = useLanguage();
-  const { user } = useAuth();
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from '../api/axios';
 
-  const dashboardTranslations = {
-    title: t('dashboard.admin.title') || "Admin Dashboard",
-    welcome: t('dashboard.welcome', { name: user?.name || "Admin" }) || `Welcome, ${user?.name || "Admin"}!`,
-    overviewTitle: t('dashboard.admin.overviewTitle') || "Platform Overview",
-    userManagementTitle: t('dashboard.admin.userManagementTitle') || "User Management",
-    itemManagementTitle: t('dashboard.admin.itemManagementTitle') || "Item Management",
-    transactionManagementTitle: t('dashboard.admin.transactionManagementTitle') || "Transaction Management",
-    totalUsers: t('dashboard.admin.totalUsers', { count: 1250 }) || "Total Users: 1,250",
-    activeListings: t('dashboard.admin.activeListings', { count: 350 }) || "Active Listings: 350",
-    pendingApprovals: t('dashboard.admin.pendingApprovals', { count: 15 }) || "Pending Item Approvals: 15",
+const AdminDashboardPage = () => {
+  const [users, setUsers] = useState([]);
+  const [items, setItems] = useState([]);
+  const [activeTab, setActiveTab] = useState('users');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [usersResponse, itemsResponse] = await Promise.all([
+          axios.get('/api/users'),
+          axios.get('/api/items')
+        ]);
+        setUsers(usersResponse.data);
+        setItems(itemsResponse.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleRoleChange = async (userId, newRole) => {
+    try {
+      await axios.patch(`/api/users/${userId}/role`, { role: newRole });
+      setUsers(users.map(user =>
+        user._id === userId ? { ...user, role: newRole } : user
+      ));
+    } catch (error) {
+      console.error('Error updating user role:', error);
+    }
   };
 
   return (
-    <DashboardLayout title={dashboardTranslations.title}>
-      <DashboardCard title={dashboardTranslations.welcome} className="md:col-span-2 lg:col-span-3">
-        <p className="text-gray-600 dark:text-gray-400">{t('dashboard.admin.intro') || "Oversee platform activity and manage users, items, and transactions."}</p>
-      </DashboardCard>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
+      
+      <div className="flex gap-4 mb-6">
+        <button
+          className={`px-4 py-2 rounded ${activeTab === 'users' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          onClick={() => setActiveTab('users')}
+        >
+          Users
+        </button>
+        <button
+          className={`px-4 py-2 rounded ${activeTab === 'items' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          onClick={() => setActiveTab('items')}
+        >
+          Items
+        </button>
+      </div>
 
-      <DashboardCard title={dashboardTranslations.overviewTitle}>
-        <div className="space-y-2">
-            <p className="text-gray-700 dark:text-gray-300">{dashboardTranslations.totalUsers}</p>
-            <p className="text-gray-700 dark:text-gray-300">{dashboardTranslations.activeListings}</p>
-            <p className="text-gray-700 dark:text-gray-300">{t('dashboard.admin.completedTransactions', {count: 500}) || "Completed Transactions: 500"}</p>
+      {activeTab === 'users' && (
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white shadow-md rounded">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {users.map(user => (
+                <tr key={user._id}>
+                  <td className="px-6 py-4 whitespace-nowrap">{user.username}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <select
+                      value={user.role}
+                      onChange={(e) => handleRoleChange(user._id, e.target.value)}
+                      className="border rounded px-2 py-1"
+                    >
+                      <option value="buyer">Buyer</option>
+                      <option value="seller">Seller</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <button
+                      onClick={() => navigate(`/users/${user._id}`)}
+                      className="text-blue-600 hover:text-blue-900"
+                    >
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      </DashboardCard>
+      )}
 
-      <DashboardCard title={dashboardTranslations.userManagementTitle}>
-        <p className="text-gray-600 dark:text-gray-400">{t('dashboard.admin.manageUserAccounts') || "View, verify, or suspend user accounts."}</p>
-        <button className="mt-4 text-sm text-blue-600 dark:text-blue-400 hover:underline">
-          {t('dashboard.admin.viewUsers') || "View All Users"}
-        </button>
-      </DashboardCard>
-
-      <DashboardCard title={dashboardTranslations.itemManagementTitle}>
-        <p className="text-gray-600 dark:text-gray-400">{dashboardTranslations.pendingApprovals}</p>
-        <button className="mt-4 text-sm text-blue-600 dark:text-blue-400 hover:underline">
-          {t('dashboard.admin.viewItems') || "Manage Listings"}
-        </button>
-      </DashboardCard>
-
-      <DashboardCard title={dashboardTranslations.transactionManagementTitle}>
-        <p className="text-gray-600 dark:text-gray-400">{t('dashboard.admin.overseeTransactions') || "Monitor ongoing rentals and facilitate payouts."}</p>
-        <button className="mt-4 text-sm text-blue-600 dark:text-blue-400 hover:underline">
-          {t('dashboard.admin.viewTransactions') || "View All Transactions"}
-        </button>
-      </DashboardCard>
-    </DashboardLayout>
+      {activeTab === 'items' && (
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white shadow-md rounded">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Owner</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {items.map(item => (
+                <tr key={item._id}>
+                  <td className="px-6 py-4 whitespace-nowrap">{item.title}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{item.owner?.username}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{item.status}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <button
+                      onClick={() => navigate(`/items/${item._id}`)}
+                      className="text-blue-600 hover:text-blue-900"
+                    >
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
   );
-}
+};
 
 export default AdminDashboardPage;
