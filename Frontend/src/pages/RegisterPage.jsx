@@ -1,15 +1,55 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; // To link to the login page
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import useLanguage from '../hooks/useLanguage';
+import { authService } from '../services/api';
+import { toast } from 'react-toastify';
 
 function RegisterPage() {
   const { t } = useLanguage();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent default form submission for now
-    // TODO: Add actual registration logic here (call backend API)
-    console.log('Registration form submitted (placeholder)');
-    alert('Registration form submitted (placeholder) - Check console for details');
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    if (formData.password !== formData.confirmPassword) {
+      toast.error(t('register.passwordMismatch'));
+      return;
+    }
+
+    try {
+      setLoading(true);
+     const result =  await authService.register({
+        username: formData.name,
+        email: formData.email,
+        password: formData.password
+      });
+
+      if (result.success) {
+        toast.success(t('register.success'));
+        navigate('/login');
+      }
+      
+      
+    } catch (error) {
+      toast.error(error.message || t('register.error'));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -40,6 +80,8 @@ function RegisterPage() {
                 id="name"
                 name="name"
                 type="text"
+                value={formData.name}
+                onChange={handleChange}
                 autoComplete="name"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
@@ -53,6 +95,8 @@ function RegisterPage() {
                 id="email-address"
                 name="email"
                 type="email"
+                value={formData.email}
+                onChange={handleChange}
                 autoComplete="email"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
@@ -66,7 +110,9 @@ function RegisterPage() {
                 id="password"
                 name="password"
                 type="password"
-                autoComplete="new-password" // Important for registration
+                value={formData.password}
+                onChange={handleChange}
+                autoComplete="new-password"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                 placeholder={t('register.password')}
@@ -79,6 +125,8 @@ function RegisterPage() {
                 id="confirm-password"
                 name="confirmPassword"
                 type="password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
                 autoComplete="new-password"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
@@ -99,7 +147,7 @@ function RegisterPage() {
               {/* <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                  <svg className="h-5 w-5 text-blue-500 group-hover:text-blue-400" ... />
               </span> */}
-              {t('register.button')}
+              {loading ? t('register.loading') : t('register.button')}
             </button>
           </div>
         </form>

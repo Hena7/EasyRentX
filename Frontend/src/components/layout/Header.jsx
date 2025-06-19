@@ -218,6 +218,15 @@ const Header = () => {
             </button>
           </div>
 
+             
+<Link
+  to="/dashboard"
+  onClick={closeMobileMenu}
+  className="block md:inline-block px-3 py-2 rounded-md text-gray-700 font-semibold dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 md:hover:bg-transparent md:dark:hover:bg-transparent hover:text-blue-600 dark:hover:text-blue-400 text-sm sm:text-base text-center md:text-left"
+>
+  Dashboard {/* Add translation key e.g., t('nav.dashboard') */}
+</Link>
+
           {/* --- Menu Items End --- */}
         </div>
       </nav>

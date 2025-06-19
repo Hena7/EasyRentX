@@ -1,40 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // For Call to Action button
 import useLanguage from "../hooks/useLanguage";
 
 import ItemCard from "../components/features/ItemCard";
 import Testimonials from "../components/features/Testimonials";
+import api from "../api/axios";
 
 function HomePage() {
   const { t } = useLanguage();
+  const [featuredItems,setFeaturedItems] = useState([]);
 
   // Define placeholder data for featured items
-  const featuredItems = [
-    {
-      id: 1,
-      name: "Modern Sedan Car",
-      price: 50,
-      imageUrl:
-        "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNhcnN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
-      location: "Addis Ababa",
-    },
-    {
-      id: 2,
-      name: "Cozy Downtown Apartment",
-      price: 120,
-      imageUrl:
-        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGhvdXNlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
-      location: "Bole",
-    },
-    {
-      id: 3,
-      name: "Professional DSLR Camera",
-      price: 40,
-      imageUrl:
-        "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FtZXJhfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
-      location: "Piassa",
-    },
-  ];
+  useEffect( ()=>{
+    const getData = async () => {
+      const featuredItemss = await api.get('http://localhost:5000/api/items');
+      setFeaturedItems(featuredItemss.data)
+      console.log(featuredItemss)
+    }
+
+    getData()
+  },[]);
 
   return (
     <div>
@@ -118,7 +103,7 @@ function HomePage() {
 
         {/* Add the grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredItems.map((item) => (
+          {featuredItems?.map((item) => (
             <ItemCard key={item.id} item={item} /> // Use the ItemCard component
           ))}
         </div>

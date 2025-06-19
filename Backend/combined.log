@@ -1,0 +1,40 @@
+{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T20:38:24.809Z"}
+{"level":"warn","message":"Port 3000 is in use, using port 3000 instead","timestamp":"2025-05-31T20:38:24.826Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T20:38:24.832Z"}
+{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-02.zw9egem.mongodb.net","timestamp":"2025-05-31T20:38:32.023Z"}
+{"level":"warn","message":"Port 3000 is in use, using port 3000 instead","timestamp":"2025-05-31T20:38:32.035Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T20:38:32.038Z"}
+{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-01.zw9egem.mongodb.net","timestamp":"2025-05-31T20:38:51.348Z"}
+{"level":"warn","message":"Port 3000 is in use, using port 3000 instead","timestamp":"2025-05-31T20:38:51.371Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T20:38:51.376Z"}
+{"level":"info","message":"MongoDB Connected: ac-qtwj1jw-shard-00-00.zw9egem.mongodb.net","timestamp":"2025-05-31T20:39:13.411Z"}
+{"level":"warn","message":"Port 3000 is in use, using port 3000 instead","timestamp":"2025-05-31T20:39:13.421Z"}
+{"level":"info","message":"Server running in development mode on port 3000","timestamp":"2025-05-31T20:39:13.425Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:27 +0000] \"GET /items/507f1f77bcf86cd799439011 HTTP/1.1\" 404 169 \"-\" \"-\"","timestamp":"2025-05-31T20:40:27.859Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:28 +0000] \"POST /items HTTP/1.1\" 404 145 \"-\" \"-\"","timestamp":"2025-05-31T20:40:28.052Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:28 +0000] \"POST /items HTTP/1.1\" 404 145 \"-\" \"-\"","timestamp":"2025-05-31T20:40:28.097Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:31 +0000] \"POST /auth/register HTTP/1.1\" 404 153 \"-\" \"-\"","timestamp":"2025-05-31T20:40:31.834Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:32 +0000] \"POST /auth/register HTTP/1.1\" 404 153 \"-\" \"-\"","timestamp":"2025-05-31T20:40:32.236Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:32 +0000] \"POST /auth/login HTTP/1.1\" 404 150 \"-\" \"-\"","timestamp":"2025-05-31T20:40:32.383Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:32 +0000] \"POST /auth/login HTTP/1.1\" 404 150 \"-\" \"-\"","timestamp":"2025-05-31T20:40:32.523Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:32 +0000] \"GET /auth/profile HTTP/1.1\" 404 151 \"-\" \"-\"","timestamp":"2025-05-31T20:40:32.720Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:32 +0000] \"GET /auth/profile HTTP/1.1\" 404 151 \"-\" \"-\"","timestamp":"2025-05-31T20:40:32.753Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:40:32 +0000] \"PUT /auth/profile HTTP/1.1\" 404 151 \"-\" \"-\"","timestamp":"2025-05-31T20:40:32.934Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:46 +0000] \"GET /api/items HTTP/1.1\" 200 370 \"-\" \"-\"","timestamp":"2025-05-31T20:45:46.493Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:46 +0000] \"GET /api/items/search?q=Test HTTP/1.1\" 200 731 \"-\" \"-\"","timestamp":"2025-05-31T20:45:46.708Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:46 +0000] \"GET /api/items/683b6a7ae62c2ab1ce94f16e HTTP/1.1\" 200 368 \"-\" \"-\"","timestamp":"2025-05-31T20:45:46.880Z"}
+{"level":"error","message":{"error":"Error fetching item","method":"GET","path":"/api/items/507f1f77bcf86cd799439011","stack":"Error: Error fetching item\n    at Object.getItemById (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\services\\item.service.js:30:11)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at getItemById (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\controllers\\item.controller.js:19:18)"},"timestamp":"2025-05-31T20:45:47.049Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:47 +0000] \"GET /api/items/507f1f77bcf86cd799439011 HTTP/1.1\" 500 50 \"-\" \"-\"","timestamp":"2025-05-31T20:45:47.060Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:47 +0000] \"POST /api/items HTTP/1.1\" 401 61 \"-\" \"-\"","timestamp":"2025-05-31T20:45:47.250Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:47 +0000] \"POST /api/items HTTP/1.1\" 401 55 \"-\" \"-\"","timestamp":"2025-05-31T20:45:47.283Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:47 +0000] \"PUT /api/items/683b6a7be62c2ab1ce94f182 HTTP/1.1\" 401 61 \"-\" \"-\"","timestamp":"2025-05-31T20:45:47.456Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:47 +0000] \"DELETE /api/items/683b6a7be62c2ab1ce94f18f HTTP/1.1\" 401 61 \"-\" \"-\"","timestamp":"2025-05-31T20:45:47.888Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:52 +0000] \"POST /api/auth/register HTTP/1.1\" 201 319 \"-\" \"-\"","timestamp":"2025-05-31T20:45:52.086Z"}
+{"level":"error","message":{"error":"Email already registered","method":"POST","path":"/api/auth/register","stack":"Error: Email already registered\n    at register (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\services\\auth.service.js:11:11)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at registerUser (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\controllers\\auth.controller.js:10:20)"},"timestamp":"2025-05-31T20:45:52.250Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:52 +0000] \"POST /api/auth/register HTTP/1.1\" 400 54 \"-\" \"-\"","timestamp":"2025-05-31T20:45:52.260Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:52 +0000] \"POST /api/auth/login HTTP/1.1\" 200 317 \"-\" \"-\"","timestamp":"2025-05-31T20:45:52.502Z"}
+{"level":"error","message":{"error":"Invalid credentials","method":"POST","path":"/api/auth/login","stack":"Error: Invalid credentials\n    at login (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\services\\auth.service.js:41:11)\n    at loginUser (C:\\Users\\Mesa\\Desktop\\classss\\EasyRentX\\Backend\\controllers\\auth.controller.js:24:20)"},"timestamp":"2025-05-31T20:45:52.740Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:52 +0000] \"POST /api/auth/login HTTP/1.1\" 401 49 \"-\" \"-\"","timestamp":"2025-05-31T20:45:52.748Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:52 +0000] \"GET /api/auth/profile HTTP/1.1\" 404 155 \"-\" \"-\"","timestamp":"2025-05-31T20:45:52.896Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:52 +0000] \"GET /api/auth/profile HTTP/1.1\" 404 155 \"-\" \"-\"","timestamp":"2025-05-31T20:45:52.929Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [31/May/2025:20:45:53 +0000] \"PUT /api/auth/profile HTTP/1.1\" 404 155 \"-\" \"-\"","timestamp":"2025-05-31T20:45:53.076Z"}
